@@ -9,6 +9,8 @@ This is a repository for test collaboration and development of Java based web ap
     - JDK 8+
     - Spring Boot
     - Spring MVC
+    - JPA
+    - Hibernate
     - Gradle 4.6+ _OR_ Gradle Wrapper
 - F-E:
     - HTML5/CSS3 _OR_ Twitter Bootstrap
@@ -25,7 +27,7 @@ This is a repository for test collaboration and development of Java based web ap
 - Tasks:
     - Jenkins for deploy and schedule tasks?
 - DB:
-    - H2 _OR_ Oracle for rellational DB
+    - H2 _OR_ Oracle for relational DB
     - Reddis for cache
   
 ## Documenting and task tracking
