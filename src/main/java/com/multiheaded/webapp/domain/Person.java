@@ -1,6 +1,6 @@
 package com.multiheaded.webapp.domain;
 
-//      Person-class
+//      Person-class entitytest
 
 public class Person {
 
