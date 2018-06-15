@@ -1,6 +1,26 @@
-/nbproject/
+# OSX files
+.DS_Store
+
+# .idea files
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Build and compile directories
+nbproject/
+out/
+build/
+
+# Generated config files
 build.xml
 manifest.mf
-*.iml
+
+# Packages
 *.jar
+
+# Gradle wrapper for compilation without Gradle installation
+gradlew
+gradlew.bat
+.gradle/
+gradle/

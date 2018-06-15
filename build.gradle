@@ -1,0 +1,55 @@
+// Initial gradle configuration. Pretty small and easy
+
+// The buildScript block determines what is available for rest of the build script
+buildscript {
+    // This repo is needed for `dependencies` inside buildScript block
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+    }
+}
+
+// This repo is needed for dependencies lower
+repositories {
+    mavenCentral()
+}
+
+// Easy enough, plugins for gradle with built in jobs
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' // Used to manage dependencies...
+
+version = '0.0.1'
+// JDK that we want to use for final compilation (do not forget to set same in the project settings manually)
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// Self-explanatory - we use maven repo for this
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+   // compile("org.springframework.boot:spring-boot-starter-security") // TODO Add this after configuration for initial settings
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
+    compile("org.webjars:bootstrap:4.1.0") // TODO Initial styles. Probably should change to our's
+    compile("com.h2database:h2") // TODO We might want to change this
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+// Packaging into jar (say 'wut')
+task jarWithDependencies(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Packaged webapp',
+                'Implementation-Version': version,
+                'Main-Class': 'com.multiheaded.webapp.Application'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
