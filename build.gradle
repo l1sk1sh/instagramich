@@ -43,12 +43,11 @@ dependencies {
 
 // Packaging into jar
 version = '0.0.1'
-mainClassName = 'com.multiheaded.webapp.Application'
 jar {
     manifest {
         attributes 'Implementation-Title': 'Packaged webapp',
                 'Implementation-Version': version,
-                'Main-Class': mainClassName
+                'Main-Class': 'com.multiheaded.webapp.Application'
     }
 
     from {
