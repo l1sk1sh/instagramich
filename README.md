@@ -7,6 +7,6 @@ Some interesting topics of wiki:
 
 - [Tech Stack](https://bitbucket.org/multiheaded/webapp/wiki/Tech-Stack) - this page contains technologies that are used or we want them to be used within the project
 - [Organisation](https://bitbucket.org/multiheaded/webapp/wiki/Organisation) - this one has small recommendations about tasks, management, git flow etc.
-  - [Task tracking](https://bitbucket.org/multiheaded/webapp/addon/trello/trello-board)
-  - [Issue tracking](https://bitbucket.org/multiheaded/webapp/issues?status=new&status=open)
-- [Architecture](https://bitbucket.org/multiheaded/webapp/wiki/Achitecture)
+    - [Task tracking](https://bitbucket.org/multiheaded/webapp/addon/trello/trello-board)
+    - [Issue tracking](https://bitbucket.org/multiheaded/webapp/issues?status=new&status=open)
+- [Architecture](https://bitbucket.org/multiheaded/webapp/wiki/Achitecture) - has a word or two about infrustructure
