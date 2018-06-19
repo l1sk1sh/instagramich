@@ -1,13 +1,19 @@
 // Initial gradle configuration. Pretty small and easy
-
+// TODO Separate gradle build files
 // The buildScript block determines what is available for rest of the build script
 buildscript {
+    ext {
+        springBootVersion     = "2.0.2.RELEASE"
+        dockerPluginVersion   = "3.2.4"
+    }
     // This repo is needed for `dependencies` inside buildScript block
     repositories {
+        jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}") // TODO Apply docker-plugin fully
     }
 }
 
@@ -36,7 +42,6 @@ dependencies {
 
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
     compile("org.webjars:bootstrap:4.1.0") // TODO Initial styles. Probably should change to our's
-    compile("com.h2database:h2") // TODO We might want to change this
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

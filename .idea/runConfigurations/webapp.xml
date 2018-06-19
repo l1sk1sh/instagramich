@@ -1,0 +1,27 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="webapp" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="JSONFilePath" value="" />
+        <option name="command" value="" />
+        <option name="commandLineOptions" value="" />
+        <option name="containerName" value="webapp" />
+        <option name="entrypoint" value="" />
+        <option name="imageTag" value="webapp:latest" />
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8080" />
+              <option name="hostPort" value="4000" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="sourceFilePath" value=".docker/webapp/Dockerfile" />
+        <option name="startBrowserSettings">
+          <browser url="http://127.0.0.1" />
+        </option>
+      </settings>
+    </deployment>
+    <method />
+  </configuration>
+</component>

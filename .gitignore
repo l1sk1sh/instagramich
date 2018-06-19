@@ -1,11 +1,17 @@
-# OSX files
+# System files
 .DS_Store
+*.*~
+*~
 
 # .idea files
-.idea/
 *.iml
 *.ipr
 *.iws
+.idea/*
+# ... but include run configurations
+# To add run configuration, open it in 'Run/Debug Configuration' and hit 'Share' button
+!.idea/runConfigurations/
+!.idea/runConfigurations/*
 
 # Build and compile directories
 nbproject/
@@ -18,6 +24,7 @@ manifest.mf
 
 # Packages
 *.jar
+*.war
 
 # Gradle wrapper for compilation without Gradle installation
 gradlew
