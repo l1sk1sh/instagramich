@@ -6,8 +6,12 @@
     <link rel="stylesheet" type="text/css"
           href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
 
+    <meta th:replace="fragments/header :: header-css"/>
+
 </head>
 <body>
+
+<div th:replace="fragments/header :: header"></div>
 
 <div class="container">
 
@@ -16,6 +20,8 @@
     </div>
 
 </div>
+
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>

@@ -8,8 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Person {
-
-    private @Id @GeneratedValue Long id; // TODO Можна прибрати і використовувати чисто instaUsername (він має бути унікальним для Інстаграму). Або його хеш для швидкості обробки
+    @Id
     private String instaUsername;
     private String fName;
     private String lName;
@@ -20,10 +19,6 @@ public class Person {
         this.instaUsername = instaUsername;
         this.fName = fName;
         this.lName = lName;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getInstaUsername() {
