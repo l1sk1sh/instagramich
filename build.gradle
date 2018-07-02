@@ -34,8 +34,6 @@ targetCompatibility = 1.8
 
 // Self-explanatory - we use maven repo for this
 dependencies {
-    // compile files("libs/ojdbc6.jar") // TODO Remove if MariaDB works fine
-
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     // compile("org.springframework.boot:spring-boot-starter-security") // TODO Add this after configuration for initial settings
@@ -44,7 +42,7 @@ dependencies {
 
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
     compile("org.webjars:bootstrap:4.1.0") // TODO Initial styles. Probably should change to our's
-
+    compile("org.mariadb.jdbc:mariadb-java-client:2.2.5")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

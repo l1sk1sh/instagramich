@@ -1,5 +1,3 @@
-# https://github.com/docker-library/mariadb/blob/9c407e44d78e10dbef48f5cfd450f84ab8a1702d/10.3/Dockerfile
-# https://hub.docker.com/_/mariadb/
 # vim:set ft=dockerfile:
 FROM debian:jessie
 

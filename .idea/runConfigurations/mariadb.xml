@@ -5,7 +5,7 @@
         <option name="JSONFilePath" value="" />
         <option name="command" value="" />
         <option name="commandLineOptions" value="" />
-        <option name="containerName" value="mariadb-container" />
+        <option name="containerName" value="mariadb" />
         <option name="entrypoint" value="" />
         <option name="envVars">
           <list>
