@@ -1,6 +1,6 @@
-// Initial gradle configuration. Pretty small and easy
-// TODO Separate gradle build files
+// Initial gradle configuration
 // The buildScript block determines what is available for rest of the build script
+// TODO Separate gradle build files
 buildscript {
     ext {
         springBootVersion     = "2.0.2.RELEASE"
@@ -34,6 +34,8 @@ targetCompatibility = 1.8
 
 // Self-explanatory - we use maven repo for this
 dependencies {
+    // compile files("libs/ojdbc6.jar") // TODO Remove if MariaDB works fine
+
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     // compile("org.springframework.boot:spring-boot-starter-security") // TODO Add this after configuration for initial settings
@@ -42,6 +44,7 @@ dependencies {
 
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
     compile("org.webjars:bootstrap:4.1.0") // TODO Initial styles. Probably should change to our's
+
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

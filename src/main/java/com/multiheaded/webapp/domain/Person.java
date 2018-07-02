@@ -1,28 +1,59 @@
 package com.multiheaded.webapp.domain;
 
-//      Person-class entitytest
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+// TODO @hayle Замінив імена змінних (як на мене зрозуміліше) та форматування (по конвенції). Якщо проти, можемо оговорити code style
+
+@Entity
 public class Person {
 
-    private String name;
-    private String surname;
+    private @Id @GeneratedValue Long id; // TODO Можна прибрати і використовувати чисто instaUsername (він має бути унікальним для Інстаграму). Або його хеш для швидкості обробки
+    private String instaUsername;
+    private String fName;
+    private String lName;
 
     public Person() {}
 
-    public Person(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
+    public Person(String instaUsername, String fName, String lName) {
+        this.instaUsername = instaUsername;
+        this.fName = fName;
+        this.lName = lName;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getSurname() { return surname; }
-    public void setSurname(String surname) { this.surname = surname; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getInstaUsername() {
+        return instaUsername;
+    }
+
+    public void setInstaUsername(String instaUsername) {
+        this.instaUsername = instaUsername;
+    }
+
+    public String getfName() {
+        return fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(name).append("" +
-                    "\nSurname: ").append(surname);
+        sb.append("First name: ").append(fName).append("" +
+                "\nLast name: ").append(lName);
         return sb.toString();
     }
 }

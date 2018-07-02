@@ -3,3 +3,9 @@ logging:
   level:
     org.springframework.security: DEBUG
     com.web: DEBUG
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:  # "oracle.jdbc.OracleDriver" # TODO Remove if Maria DB applied
