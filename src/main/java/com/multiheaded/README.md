@@ -8,3 +8,11 @@ This block is about ideas that we might realize in the close future.
     you may preview you posts before publishing.
 - Multi-posting:
     you may publish same post from many accounts.
+- Scheduled posting:
+    set at what time you want to post and what (for ex, 1 post a week at 1:00 pm)
+- Auto-following:
+    set specific queries or list of users to be followed
+- Analytics:
+    monitor what is the conversion from subscribed to and gained from them subscribers
+- Auto-liking:
+    like posts according to set criteria
