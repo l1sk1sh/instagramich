@@ -1,38 +1,43 @@
 // Initial gradle configuration
-// The buildScript block determines what is available for rest of the build script
 // TODO Separate gradle build files
 buildscript {
     ext {
-        springBootVersion     = "2.0.2.RELEASE"
-        dockerPluginVersion   = "3.2.4"
+        springBootVersion   = "2.0.2.RELEASE"
+        dockerPluginVersion = "3.2.4"
+        nodePluginVersion   = "1.2.0"
+
+        bootstrapVersion    = "4.1.0"
+        mariaVersion        = "2.2.5"
     }
-    // This repo is needed for `dependencies` inside buildScript block
+
     repositories {
         jcenter()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
+
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}") // TODO Apply docker-plugin fully
+        classpath("com.moowork.gradle:gradle-node-plugin:${nodePluginVersion}")
     }
 }
 
-// This repo is needed for dependencies lower
+def nodeVersion = "10.5.0"
+def npmanagerVersion = "6.1.0"
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "com.moowork.node"
+
 repositories {
     mavenCentral()
 }
 
-// Easy enough, plugins for gradle with built in jobs
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management' // Used to manage dependencies...
-
-// JDK that we want to use for final compilation (do not forget to set same in the project settings manually)
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-// Self-explanatory - we use maven repo for this
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -41,20 +46,23 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
 
-    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
-    compile("org.webjars:bootstrap:4.1.0") // TODO Initial styles. Probably should change to our's
-    compile("org.mariadb.jdbc:mariadb-java-client:2.2.5")
+    // compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
+    compile("org.webjars:bootstrap:${bootstrapVersion}") // TODO Initial styles. Probably should change to our"s
+    compile("org.mariadb.jdbc:mariadb-java-client:${mariaVersion}")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
-// Packaging into jar
-version = '0.0.1'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = "0.0.1"
+
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Packaged webapp',
-                'Implementation-Version': version,
-                'Main-Class': 'com.multiheaded.webapp.Application'
+        attributes "Implementation-Title": "Packaged webapp",
+                "Implementation-Version": version,
+                "Main-Class": "com.multiheaded.webapp.Application"
     }
 
     from {
@@ -63,5 +71,22 @@ jar {
 }
 
 bootJar {
-    baseName = 'com.' + group + '.webapp'
+    baseName = "com.multiheaded.webapp"
+}
+
+task copyDockerJar(type: Copy) {
+    from "build/libs"
+    into ".docker/webapp"
+    rename "(.*).jar", "app.jar"
+}
+
+// TODO ADD npm scripts
+// https://objectpartners.com/2016/04/22/using-webpack-with-gradle/
+// https://guides.gradle.org/running-webpack-with-gradle/#step_1_2_install_webpack_and_lodash
+// https://github.com/srs/gradle-node-plugin
+
+node {
+    version = nodeVersion
+    npmVersion = npmanagerVersion
+    download = true
 }
