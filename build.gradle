@@ -1,16 +1,15 @@
 buildscript {
     ext {
         springBootVersion   = "2.0.2.RELEASE"
-        dockerPluginVersion = "3.2.4"
+        dockerPluginVersion = "3.2.5"
         nodePluginVersion   = "1.2.0"
 
         mariaVersion        = "2.2.5"
-        jwtVersiob          = "0.9.0"
+        jwtVersion          = "0.9.0"
     }
 
     repositories {
         jcenter()
-        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -28,9 +27,10 @@ apply plugin: "idea"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 apply plugin: "com.moowork.node"
+apply plugin: "com.bmuschko.docker-remote-api"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -42,40 +42,86 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
 
     compile("org.mariadb.jdbc:mariadb-java-client:${mariaVersion}")
-    compile("io.jsonwebtoken:jjwt:${jwtVersiob}")
+    compile("io.jsonwebtoken:jjwt:${jwtVersion}")
 
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+build {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-version = "0.0.1"
+    version = "0.0.1"
 
-jar {
-    manifest {
-        attributes "Implementation-Title": "Packaged webapp",
-                "Implementation-Version": version,
-                "Main-Class": "com.multiheaded.webapp.Application"
+    jar {
+        // TODO Fix dependency packaging
+        manifest {
+            attributes "Implementation-Title": "Packaged webapp",
+                    "Implementation-Version": version,
+                    "Main-Class": "com.multiheaded.webapp.Application"
+        }
+
+        from {
+            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        }
     }
 
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    bootJar {
+        bootJar.dependsOn jar
+        baseName = "com.multiheaded.webapp"
     }
 }
 
-bootJar {
-    bootJar.dependsOn jar
-    baseName = "com.multiheaded.webapp"
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
+
+docker {
+    url = 'tcp://127.0.0.1:2375' //Enable "Expose daemon :2735 without TSL" in Docker
+
+    registryCredentials {
+        url = 'https://index.docker.io/v1/'
+        username = 'multiheaded'
+        password = 'superPassw0rd'
+        email = 'multiheaded@gmail.com'
+    }
+
+    task copyDockerJar(type: Copy) {
+        from "build/libs"
+        into ".docker/webapp"
+        rename "(.*).jar", "app.jar"
+    }
+
+    task buildDbImage(type: DockerBuildImage) {
+        inputDir = file('.docker/mariadb')
+        tag = "mariadb:latest"
+    }
+
+    task createDbContainer(type: DockerCreateContainer) {
+        dependsOn buildDbImage
+        targetImageId { buildDbImage.getImageId() }
+        containerName = 'mariadb'
+        portBindings = ['3306:3306']
+        setEnv("MYSQL_ROOT_PASSWORD", "password")
+    }
+
+    task startDbContainer(type: DockerStartContainer) {
+        dependsOn createDbContainer
+        targetContainerId { createDbContainer.getContainerId() }
+    }
+
+    task stopDbContainer(type: DockerStopContainer) {
+        targetContainerId { createDbContainer.getContainerId() }
+    }
+
+    task functionalTestMyApp(type: Test) {
+        dependsOn startDbContainer
+        finalizedBy stopDbContainer
+    }
 }
 
-task copyDockerJar(type: Copy) {
-    from "build/libs"
-    into ".docker/webapp"
-    rename "(.*).jar", "app.jar"
-}
+
 
 // TODO ADD npm scripts
 
@@ -86,4 +132,18 @@ node {
     version = nodeVersion
     npmVersion = npmanagerVersion
     download = true
+
+    task npmWatch(type: NpmTask) {
+        args = ['run', 'watch']
+    }
+
+    task npmWebpackBuildProd(type: NpmTask) {
+        args = ['run', 'buildProd']
+    }
+
+    task npmWebpackBuildDev(type: NpmTask) {
+        args = ['run', 'buildDev']
+    }
+
+    bootRun.dependsOn npmWebpackBuildDev
 }
