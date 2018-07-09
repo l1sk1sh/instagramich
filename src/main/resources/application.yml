@@ -5,6 +5,7 @@ logging:
     org.hibernate.SQL: DEBUG
 spring:
   jpa:
+    database: default
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MariaDBDialect # TODO another DB for client\payment\subscription info?
@@ -13,11 +14,17 @@ spring:
       base-path: /api
   datasource:
     platform: mariadb
+    url: jdbc:mysql://localhost:3306/main?serverTimezone=UTC
+    username: root
+    password: password
+    driver-class-name: org.mariadb.jdbc.Driver
+  datasourceInstagram:
+    platform: mariadb
     url: jdbc:mysql://localhost:3306/instagram?serverTimezone=UTC
     username: root
     password: password
     driver-class-name: org.mariadb.jdbc.Driver
-  jackson:
+jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
     time-zone: UTC
