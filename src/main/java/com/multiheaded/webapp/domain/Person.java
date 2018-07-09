@@ -1,7 +1,6 @@
 package com.multiheaded.webapp.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 // TODO @hayle Замінив імена змінних (як на мене зрозуміліше) та форматування (по конвенції). Якщо проти, можемо оговорити code style

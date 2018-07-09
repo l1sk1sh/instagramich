@@ -1,13 +1,11 @@
-// Initial gradle configuration
-// TODO Separate gradle build files
 buildscript {
     ext {
         springBootVersion   = "2.0.2.RELEASE"
         dockerPluginVersion = "3.2.4"
         nodePluginVersion   = "1.2.0"
 
-        bootstrapVersion    = "4.1.0"
         mariaVersion        = "2.2.5"
+        jwtVersiob          = "0.9.0"
     }
 
     repositories {
@@ -24,9 +22,6 @@ buildscript {
         classpath("com.moowork.gradle:gradle-node-plugin:${nodePluginVersion}")
     }
 }
-
-def nodeVersion = "10.5.0"
-def npmanagerVersion = "6.1.0"
 
 apply plugin: "java"
 apply plugin: "idea"
@@ -46,9 +41,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
 
-    // compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
-    compile("org.webjars:bootstrap:${bootstrapVersion}") // TODO Initial styles. Probably should change to our"s
     compile("org.mariadb.jdbc:mariadb-java-client:${mariaVersion}")
+    compile("io.jsonwebtoken:jjwt:${jwtVersiob}")
+
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
@@ -71,6 +67,7 @@ jar {
 }
 
 bootJar {
+    bootJar.dependsOn jar
     baseName = "com.multiheaded.webapp"
 }
 
@@ -81,9 +78,9 @@ task copyDockerJar(type: Copy) {
 }
 
 // TODO ADD npm scripts
-// https://objectpartners.com/2016/04/22/using-webpack-with-gradle/
-// https://guides.gradle.org/running-webpack-with-gradle/#step_1_2_install_webpack_and_lodash
-// https://github.com/srs/gradle-node-plugin
+
+def nodeVersion = "10.5.0"
+def npmanagerVersion = "6.1.0"
 
 node {
     version = nodeVersion

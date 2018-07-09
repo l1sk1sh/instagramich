@@ -20,14 +20,17 @@ class App extends React.Component {
 
     render() {
         return (
-            <PersonList persons={this.state.persons}/>
+            <div>
+                <PersonList persons={this.state.persons}/>
+
+            </div>
         )
     }
 }
 
 class PersonList extends React.Component{
     render() {
-        var persons = this.props.persons.map(person =>
+        let persons = this.props.persons.map(person =>
             <Person key={person._links.self.href} person={person}/>
         );
         return (

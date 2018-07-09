@@ -1,19 +1,23 @@
-# Configuration for project
 logging:
   level:
     org.springframework.security: DEBUG
-    com.web: DEBUG
+    com.multiheaded.webapp: DEBUG
+    org.hibernate.SQL: DEBUG
 spring:
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MariaDBDialect
+    database-platform: org.hibernate.dialect.MariaDBDialect # TODO another DB for client\payment\subscription info?
   data:
     rest:
       base-path: /api
   datasource:
     platform: mariadb
-    url: jdbc:mysql://localhost:3306/instagram # TODO Dev config. Make production
+    url: jdbc:mysql://localhost:3306/instagram?serverTimezone=UTC
     username: root
     password: password
     driver-class-name: org.mariadb.jdbc.Driver
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    time-zone: UTC

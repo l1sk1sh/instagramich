@@ -6,14 +6,15 @@ module.exports = {
     cache: true,
     output: {
         path: __dirname,
-        filename: './src/main/resources/static/built/bundle.js'
+        filename: './src/main/resources/static/js/bundle.js' //TODO Versioning of JS
+        //TODO building of CSS
     },
     module: {
         rules: [
             {
                 test: path.join(__dirname, '.'),
                 exclude: /(node_modules)/,
-               loader: 'babel-loader',
+                loader: 'babel-loader',
                 query: {
                     cacheDirectory: true,
                     presets: ['env', 'react']
