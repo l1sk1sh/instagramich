@@ -1,4 +1,4 @@
-package com.multiheaded.webapp.model.instagram.domain;
+package com.multiheaded.webapp.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.multiheaded.webapp.model.main.domain;
+package com.multiheaded.webapp.domain;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -16,9 +16,7 @@ public class Role {
     @Column(length = 60)
     private RoleName name;
 
-    public Role() {
-
-    }
+    public Role() {}
 
     public Role(RoleName name) {
         this.name = name;

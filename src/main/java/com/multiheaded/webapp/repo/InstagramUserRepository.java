@@ -1,6 +1,6 @@
-package com.multiheaded.webapp.model.instagram.repo;
+package com.multiheaded.webapp.repo;
 
-import com.multiheaded.webapp.model.instagram.domain.InstagramUser;
+import com.multiheaded.webapp.domain.InstagramUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

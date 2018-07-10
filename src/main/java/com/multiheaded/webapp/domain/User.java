@@ -1,4 +1,4 @@
-package com.multiheaded.webapp.model.main.domain;
+package com.multiheaded.webapp.domain;
 
 import org.hibernate.annotations.NaturalId;
 

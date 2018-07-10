@@ -1,4 +1,4 @@
-package com.multiheaded.webapp.model.main.domain;
+package com.multiheaded.webapp.domain;
 
 public enum RoleName {
     ROLE_USER_TRIAL,

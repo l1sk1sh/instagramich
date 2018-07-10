@@ -1,8 +1,9 @@
-package com.multiheaded.webapp.model.main.repo;
+package com.multiheaded.webapp.repo;
 
-import com.multiheaded.webapp.model.main.domain.User;
+import com.multiheaded.webapp.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    @Transactional
+    Long deleteByEmail(String email);
 }

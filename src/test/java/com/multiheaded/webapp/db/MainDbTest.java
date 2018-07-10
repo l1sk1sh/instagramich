@@ -1,8 +1,8 @@
 package com.multiheaded.webapp.db;
 
-import com.multiheaded.webapp.model.instagram.domain.InstagramUser;
-import com.multiheaded.webapp.model.main.domain.User;
-import com.multiheaded.webapp.model.main.repo.UserRepository;
+import com.multiheaded.webapp.domain.User;
+import com.multiheaded.webapp.repo.UserRepository;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +22,8 @@ public class MainDbTest {
 
     private String username = "valeriy2";
     private String email = "test@gmail.com";
+    private String name = "Valeriy";
+    private String password = "12345qqwe";
 
     @Before
     public void init() {
@@ -29,7 +31,12 @@ public class MainDbTest {
         User user = new User();
 
         user.setEmail(email);
+        user.setPassword(password);
+        user.setName(name);
+        user.setUsername(username);
 
+        userRepository.save(user);
+        userRepository.save(user);
     }
 
     /**
@@ -43,6 +50,10 @@ public class MainDbTest {
         Assert.assertNotNull(user);
 
         System.out.println("The user " + user.toString() + " was found");
+    }
 
+    @After
+    public void purge() {
+        userRepository.deleteByEmail(email);
     }
 }
