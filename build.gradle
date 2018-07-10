@@ -1,7 +1,8 @@
 buildscript {
+    // TODO Global check for latest versions
     ext {
         springBootVersion   = "2.0.2.RELEASE"
-        dockerPluginVersion = "3.2.5"
+        dockerPluginVersion = "3.2.5" // TODO Update version
         nodePluginVersion   = "1.2.0"
 
         mariaVersion        = "2.2.5"
@@ -28,7 +29,6 @@ apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 apply plugin: "com.moowork.node"
 apply plugin: "com.bmuschko.docker-remote-api"
-apply plugin: "com.bmuschko.docker-java-application"
 
 repositories {
     jcenter()
@@ -37,7 +37,7 @@ repositories {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    // compile("org.springframework.boot:spring-boot-starter-security") // TODO Add this after configuration for initial settings
+    compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
@@ -110,6 +110,7 @@ docker {
         targetImageId { buildDbImage.getImageId() }
         containerName = 'mariadb'
         portBindings = ['3306:3306']
+        // https://stackoverflow.com/questions/47836017/override-environment-variables-on-dockerstartcontainer
         env = ["MYSQL_ROOT_PASSWORD=password", "MYSQL_DATABASE=main"]
         onError { message ->
             logger.quiet message.toString()
