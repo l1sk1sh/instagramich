@@ -17,7 +17,7 @@ buildscript {
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}") // TODO Apply docker-plugin fully
+        classpath("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}")
         classpath("com.moowork.gradle:gradle-node-plugin:${nodePluginVersion}")
     }
 }
@@ -28,6 +28,7 @@ apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 apply plugin: "com.moowork.node"
 apply plugin: "com.bmuschko.docker-remote-api"
+apply plugin: "com.bmuschko.docker-java-application"
 
 repositories {
     jcenter()
@@ -74,6 +75,7 @@ build {
     }
 }
 
+
 import com.bmuschko.gradle.docker.tasks.image.*
 import com.bmuschko.gradle.docker.tasks.container.*
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -108,7 +110,7 @@ docker {
         targetImageId { buildDbImage.getImageId() }
         containerName = 'mariadb'
         portBindings = ['3306:3306']
-        setEnv("MYSQL_ROOT_PASSWORD=password", "MYSQL_DATABASE=main")
+        env = ["MYSQL_ROOT_PASSWORD=password", "MYSQL_DATABASE=main"]
         onError { message ->
             logger.quiet message.toString()
         }

@@ -115,9 +115,13 @@ VOLUME /var/lib/mysql
 
 COPY 01-databases.sql ./docker-entrypoint-initdb.d
 COPY docker-entrypoint.sh /usr/local/bin/
-# backwards compat
+# backwards compatibility
 RUN ln -s usr/local/bin/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
+# TODO test this with UNIX
+RUN apt-get update && apt-get install -y dos2unix
+RUN dos2unix usr/local/bin/docker-entrypoint.sh && apt-get --purge remove -y dos2unix
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 3306
