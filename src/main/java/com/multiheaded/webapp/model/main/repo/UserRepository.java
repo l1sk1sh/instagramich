@@ -1,6 +1,6 @@
-package com.multiheaded.webapp.repository;
+package com.multiheaded.webapp.model.main.repo;
 
-import com.multiheaded.webapp.model.main.User;
+import com.multiheaded.webapp.model.main.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
