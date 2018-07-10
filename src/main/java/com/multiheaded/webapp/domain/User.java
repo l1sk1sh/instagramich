@@ -1,4 +1,4 @@
-package com.multiheaded.webapp.model.main;
+package com.multiheaded.webapp.domain;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(schema = "main", name = "users", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
         }),
@@ -104,3 +104,4 @@ public class User {
         this.roles = roles;
     }
 }
+

@@ -81,7 +81,7 @@ RUN echo "deb http://ftp.osuosl.org/pub/mariadb/repo/$MARIADB_MAJOR/debian jessi
 		echo 'Pin: release o=MariaDB'; \
 		echo 'Pin-Priority: 999'; \
 	} > /etc/apt/preferences.d/mariadb
-# add repository pinning to make sure dependencies from this MariaDB repo are preferred over Debian dependencies
+# add repo pinning to make sure dependencies from this MariaDB repo are preferred over Debian dependencies
 #  libmariadbclient18 : Depends: libmysqlclient18 (= 5.5.42+maria-1~wheezy) but 5.5.43-0+deb7u1 is to be installed
 
 # the "/var/lib/mysql" stuff here is because the mysql-server postinst doesn't have an explicit way to disable the mysql_install_db codepath besides having a database already "configured" (ie, stuff in /var/lib/mysql/mysql)
@@ -113,6 +113,7 @@ RUN { \
 
 VOLUME /var/lib/mysql
 
+COPY 01-databases.sql ./docker-entrypoint-initdb.d
 COPY docker-entrypoint.sh /usr/local/bin/
 # backwards compat
 RUN ln -s usr/local/bin/docker-entrypoint.sh /

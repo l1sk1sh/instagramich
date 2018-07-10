@@ -1,7 +1,7 @@
-package com.multiheaded.webapp.repository;
+package com.multiheaded.webapp.repo;
 
-import com.multiheaded.webapp.model.main.Role;
-import com.multiheaded.webapp.model.main.RoleName;
+import com.multiheaded.webapp.domain.Role;
+import com.multiheaded.webapp.domain.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

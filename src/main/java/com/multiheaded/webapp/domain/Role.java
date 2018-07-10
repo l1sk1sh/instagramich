@@ -1,11 +1,11 @@
-package com.multiheaded.webapp.model.main;
+package com.multiheaded.webapp.domain;
 
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "main", name = "roles")
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +16,7 @@ public class Role {
     @Column(length = 60)
     private RoleName name;
 
-    public Role() {
-
-    }
+    public Role() {}
 
     public Role(RoleName name) {
         this.name = name;
