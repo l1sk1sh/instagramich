@@ -33,12 +33,12 @@ public class User {
 
     @NaturalId
     @NotBlank
-    @Size(max = 40)
+    @Size(max = 254)
     @Email
     private String email;
 
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 60)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

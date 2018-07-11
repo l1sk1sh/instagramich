@@ -1,5 +1,6 @@
 buildscript {
     // TODO Global check for latest versions
+    // TODO Create custom run configurations for different environments
     ext {
         springBootVersion   = "2.0.2.RELEASE"
         dockerPluginVersion = "3.2.5" // TODO Update version
@@ -50,6 +51,11 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
+bootRun {
+    dependsOn
+    jvmArgs = ["-Dspring.profiles.active=dev"]
+}
+
 build {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -74,7 +80,6 @@ build {
         baseName = "com.multiheaded.webapp"
     }
 }
-
 
 import com.bmuschko.gradle.docker.tasks.image.*
 import com.bmuschko.gradle.docker.tasks.container.*

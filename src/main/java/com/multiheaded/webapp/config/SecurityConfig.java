@@ -1,6 +1,6 @@
 package com.multiheaded.webapp.config;
 
-// TODO Play with '@EnableGlobalMethodSecurity'
+// TODO Play with '@PreAuthorize', '@Secured' and '@RolesAllowed'
 
 import com.multiheaded.webapp.security.CustomUserDetailsService;
 import com.multiheaded.webapp.security.JwtAuthenticationEntryPoint;
@@ -21,6 +21,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/*
+    This configuration handles security and Jwt auth token
+    JWT - Json web token (it is a standard). Signed token that we use to verify identity
+    JWT token passed to server through "Authorization" header
+    @EnableGlobalMethodSecurity - enables method security (for ex. "@Secured("ROLE_ADMIN") public User getAllUsers()")
+        restricts method getAllUsers() to ADMIN role only.
+    JSR 250 - java annotations specification (no idea)
+*/
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -29,17 +37,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    // Service that loads user's details
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
+    // Return 401 when someone sniffs around
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
+    /*
+        Read JWT token from header, validate it, load user details, set user details into SecurityContext
+        "SecurityContext" - Interface defining the minimum security information associated
+            with the current thread of execution.
+        We can also access the user details stored in the SecurityContext in our controllers
+            to perform our business logic.
+     */
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
+    // TODO Build JDBC authentication
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
@@ -86,12 +104,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+                .antMatchers(HttpMethod.GET, "/api/instagram/**", "/api/users/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
 
-        // Add our custom JWT security filter
+        // Add custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
