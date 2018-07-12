@@ -1,17 +1,9 @@
-logging:
-  level:
-    org.springframework.security: DEBUG
-    com.multiheaded.webapp: DEBUG
-    org.hibernate.SQL: DEBUG
 spring:
   jpa:
     database: default
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MariaDBDialect
-  data:
-    rest:
-      base-path: /api
   datasource:
     platform: mariadb
     url: jdbc:mysql://localhost:3306/main?serverTimezone=UTC
@@ -22,3 +14,6 @@ jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
     time-zone: UTC
+app:
+  jwtSecret: TestSecretKey
+  jwtExpirationInMs: 604800000

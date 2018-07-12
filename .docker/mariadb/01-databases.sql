@@ -3,3 +3,7 @@
 
 # CREATE USER 'root'@'localhost';
 # GRANT ALL ON *.* TO 'root'@'%';
+
+#INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+#INSERT INTO roles(name) VALUES('ROLE_USER_TRIAL');
+#INSERT INTO roles(name) VALUES('ROLE_USER_FULL');

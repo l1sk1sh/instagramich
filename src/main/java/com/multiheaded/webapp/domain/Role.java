@@ -1,6 +1,7 @@
 package com.multiheaded.webapp.domain;
 
 import org.hibernate.annotations.NaturalId;
+import org.springframework.security.access.annotation.Secured;
 
 import javax.persistence.*;
 
