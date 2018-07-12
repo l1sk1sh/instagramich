@@ -1,5 +1,7 @@
 package com.multiheaded.webapp.security;
 
+// TODO Add refreshToken https://github.com/callicoder/spring-security-react-ant-design-polls-app/tree/refresh-token
+
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
