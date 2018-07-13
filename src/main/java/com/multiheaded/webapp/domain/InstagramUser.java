@@ -1,13 +1,17 @@
 package com.multiheaded.webapp.domain;
 
+import com.multiheaded.webapp.domain.audit.DateAudit;
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "instagram_users")
-public class InstagramUser {
+public class InstagramUser extends DateAudit {
     /*InstagramUser(is_private=false,
     is_verified=false,
     username=oliver_johnson_work,
@@ -62,30 +66,30 @@ public class InstagramUser {
     */
 
     // TODO One to Many with Pictures
-    // TODO Decide if picture size are necessary
+    // TODO Decide if picture sizes are necessary
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     private Boolean isPrivate;
 
     @NotBlank
     @Size(max = 30)
+    @Column(unique=true)
     private String username;
 
     @Size(max = 150)
     private String fullName;
 
-    @NotBlank
-    @Size(max = 11)
+    @NotNull
     private Long pk;
 
     @NotBlank
     private String profilePicUrl;
 
-    @NotBlank
+    @NotNull
     private Integer followerCount;
 
     public InstagramUser() {}

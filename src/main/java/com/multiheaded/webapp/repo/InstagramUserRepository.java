@@ -14,9 +14,11 @@ import java.util.Optional;
 public interface InstagramUserRepository extends JpaRepository<InstagramUser, Long> {
     Optional<InstagramUser> findByUsername(String username);
 
+    /*
     Page<InstagramUser> findByCreatedBy(Long userId, Pageable pageable);
-
+    // TODO Think if we should store dependencies of other iUsers in DB, or call them directly every time
     long countByCreatedBy(Long instaUserId);
+    */
 
     List<InstagramUser> findByIdIn(List<Long> instaUserIds);
 

@@ -11,6 +11,7 @@ package com.multiheaded.webapp.controller;
 import com.multiheaded.webapp.domain.User;
 import com.multiheaded.webapp.exception.ResourceNotFoundException;
 import com.multiheaded.webapp.payload.*;
+import com.multiheaded.webapp.repo.SignedInstagramUserRepository;
 import com.multiheaded.webapp.repo.UserRepository;
 import com.multiheaded.webapp.security.CurrentUser;
 import com.multiheaded.webapp.security.UserPrincipal;
@@ -28,10 +29,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    /*
     @Autowired
-    // TODO SignedInstagramRepo
+    SignedInstagramUserRepository sRepository;
 
+    /*
     @Autowired
     // TODO Instagram service
     */
@@ -60,8 +61,6 @@ public class UserController {
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-
-        // TODO Add count list of signed instagram accounts from repo
 
         UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt());
 

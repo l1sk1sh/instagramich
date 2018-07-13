@@ -1,51 +1,59 @@
 package com.multiheaded.webapp.domain;
 
+import com.multiheaded.webapp.domain.audit.DateAudit;
+import com.multiheaded.webapp.domain.audit.UserDateAudit;
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "signed_instagram_users")
-public class SignedInstagramUser extends InstagramUser {
+public class SignedInstagramUser extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    private Boolean isPrivate;
-
-    @NotBlank
-    @Size(max = 30)
-    private String username;
-
-    @Size(max = 150)
-    private String fullName;
-
-    @NotBlank
-    @Size(max = 11)
-    private Long pk;
-
-    @NotBlank
-    private String profilePicUrl;
-
-    @NotBlank
-    private Integer followerCount;
-
-    @NotBlank
     private String password;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "username", nullable = false)
+    private InstagramUser instagramUser;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "signed_user_followers",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "username"))
+    private Set<InstagramUser> followers = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "signed_user_followings",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "username"))
+    private Set<InstagramUser> followings = new HashSet<>();
+
     public SignedInstagramUser() {}
 
-    // TODO Fuck, it probably won't work for @Entity. Design it!
-    public SignedInstagramUser(Boolean isPrivate, String username, String fullName,
-                               Long pk, String profilePicUrl, Integer followerCount) {
-        super(isPrivate, username, fullName, pk, profilePicUrl, followerCount);
-        this.password = password; // TODO Do not forget to encrypt Controller's sent password
+    public SignedInstagramUser(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPassword() {
@@ -54,5 +62,37 @@ public class SignedInstagramUser extends InstagramUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public InstagramUser getInstagramUser() {
+        return instagramUser;
+    }
+
+    public void setInstagramUser(InstagramUser instagramUser) {
+        this.instagramUser = instagramUser;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<InstagramUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<InstagramUser> followers) {
+        this.followers = followers;
+    }
+
+    public Set<InstagramUser> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(Set<InstagramUser> followings) {
+        this.followings = followings;
     }
 }
