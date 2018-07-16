@@ -2,6 +2,7 @@ package com.multiheaded.webapp.domain;
 
 import com.multiheaded.webapp.domain.audit.DateAudit;
 import com.multiheaded.webapp.domain.audit.UserDateAudit;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -170,5 +171,13 @@ public class InstagramUser extends DateAudit {
 
     public void setFollowerCount(Integer followerCount) {
         this.followerCount = followerCount;
+    }
+
+    public String toString() {
+        return new ToStringBuilder(this).
+                append("id", id).
+                append("username", username).
+                append("fullname", fullName).
+                toString();
     }
 }

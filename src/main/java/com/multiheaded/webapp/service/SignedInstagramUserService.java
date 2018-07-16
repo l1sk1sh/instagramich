@@ -1,6 +1,5 @@
 package com.multiheaded.webapp.service;
 
-import com.multiheaded.webapp.domain.InstagramUser;
 import com.multiheaded.webapp.domain.SignedInstagramUser;
 import com.multiheaded.webapp.domain.User;
 import com.multiheaded.webapp.exception.BadRequestException;
@@ -12,6 +11,7 @@ import com.multiheaded.webapp.repo.SignedInstagramUserRepository;
 import com.multiheaded.webapp.repo.UserRepository;
 import com.multiheaded.webapp.security.UserPrincipal;
 import com.multiheaded.webapp.util.AppConstants;
+import com.multiheaded.webapp.util.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class SignedInstagramUserService {
@@ -45,6 +42,8 @@ public class SignedInstagramUserService {
             String username, UserPrincipal currentUser, int page, int size) {
         validatePageNumberAndSize(page, size);
 
+        // TODO ADD SECURITY using currentUser
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
@@ -57,13 +56,12 @@ public class SignedInstagramUserService {
                     sUsers.getSize(), sUsers.getTotalElements(), sUsers.getTotalPages(), sUsers.isLast());
         }
 
-        // Map  to PollResponses containing vote counts and poll creator details
-        List<Long> signedUsersIds = sUsers.map(SignedInstagramUser::getId).getContent();
+        // Mapping to SignedInstagramUserResponse
+        List<SignedInstagramUserResponse> sUserResponses =
+                sUsers.map(ModelMapper::mapSignedInstagramUserToResponse).getContent();
 
-        // TODO Create mapping
-
-        return null;
-
+        return new PagedResponse<>(sUserResponses, sUsers.getNumber(),
+                sUsers.getSize(), sUsers.getTotalElements(), sUsers.getTotalPages(), sUsers.isLast());
     }
 
     private void validatePageNumberAndSize(int page, int size) {
