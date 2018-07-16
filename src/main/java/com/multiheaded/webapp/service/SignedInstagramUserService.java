@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,14 +41,14 @@ public class SignedInstagramUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(SignedInstagramUserService.class);
 
-    public PagedResponse<SignedInstagramUserResponse> getSignedInstagramUsersLinkedBy(
+    public PagedResponse<SignedInstagramUserResponse> getSignedInstagramUsersCreatedBy(
             String username, UserPrincipal currentUser, int page, int size) {
         validatePageNumberAndSize(page, size);
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        // Retrieve all polls created by the given username
+        // Retrieve all signed instagram accounts created by the given username
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         Page<SignedInstagramUser> sUsers = sRepository.findByCreatedBy(user.getId(), pageable);
 
@@ -56,7 +57,7 @@ public class SignedInstagramUserService {
                     sUsers.getSize(), sUsers.getTotalElements(), sUsers.getTotalPages(), sUsers.isLast());
         }
 
-        // Map Polls to PollResponses containing vote counts and poll creator details
+        // Map  to PollResponses containing vote counts and poll creator details
         List<Long> signedUsersIds = sUsers.map(SignedInstagramUser::getId).getContent();
 
         // TODO Create mapping

@@ -1,6 +1,7 @@
 package com.multiheaded.webapp.domain;
 
 import com.multiheaded.webapp.domain.audit.DateAudit;
+import com.multiheaded.webapp.domain.audit.UserDateAudit;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -8,6 +9,14 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
+
+/*
+TODO RESEARCH
+fun toString(): String = ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE)
+ */
+
 
 @Entity
 @Table(name = "instagram_users")
@@ -65,9 +74,6 @@ public class InstagramUser extends DateAudit {
     longitude=0.0)
     */
 
-    // TODO One to Many with Pictures
-    // TODO Decide if picture sizes are necessary
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -91,6 +97,12 @@ public class InstagramUser extends DateAudit {
 
     @NotNull
     private Integer followerCount;
+
+    @ManyToMany(mappedBy = "followers")
+    private Set<SignedInstagramUser> followings;
+
+    @ManyToMany(mappedBy = "followings")
+    private Set<SignedInstagramUser> followers;
 
     public InstagramUser() {}
 

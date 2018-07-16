@@ -3,7 +3,7 @@ package com.multiheaded.webapp.payload;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class SignedInstagramUserRequest {
+public class FollowersRequest {
     @NotBlank
     @Size(max = 30)
     private String username;

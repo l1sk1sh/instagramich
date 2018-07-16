@@ -1,5 +1,6 @@
 package com.multiheaded.webapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.multiheaded.webapp.domain.audit.DateAudit;
 import com.multiheaded.webapp.domain.audit.UserDateAudit;
 import org.hibernate.validator.constraints.Length;
@@ -22,25 +23,25 @@ public class SignedInstagramUser extends UserDateAudit {
     @NotBlank
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "username", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "instagram_user_id", nullable = false)
     private InstagramUser instagramUser;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "signed_user_followers",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "username"))
-    private Set<InstagramUser> followers = new HashSet<>();
+            joinColumns = @JoinColumn(name = "signed_instagram_user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "instagram_user_id", referencedColumnName = "id"))
+    private Set<InstagramUser> followers;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "signed_user_followings",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "username"))
-    private Set<InstagramUser> followings = new HashSet<>();
+            joinColumns = @JoinColumn(name = "signed_instagram_user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "instagram_user_id", referencedColumnName = "id"))
+    private Set<InstagramUser> followings;
 
     public SignedInstagramUser() {}
 

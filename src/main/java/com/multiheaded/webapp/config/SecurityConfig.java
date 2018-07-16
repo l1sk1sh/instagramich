@@ -24,11 +24,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /*
     This configuration handles security and Jwt auth token
     JWT - Json web token (it is a standard). Signed token that we use to verify identity
+        TODO Learn theory https://medium.com/@xoor/jwt-authentication-service-44658409e12c
     JWT token passed to server through "Authorization" header
     @EnableGlobalMethodSecurity - enables method security (for ex. "@Secured("ROLE_ADMIN") public User getAllUsers()")
         restricts method getAllUsers() to ADMIN role only.
     JSR 250 - java annotations specification (no idea)
 */
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(

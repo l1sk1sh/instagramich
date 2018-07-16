@@ -1,3 +1,4 @@
+# TODO Make h2 local test
 spring:
   jpa:
     database: default

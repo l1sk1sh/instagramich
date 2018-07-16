@@ -1,26 +1,24 @@
 package com.multiheaded.webapp.repo;
 
 import com.multiheaded.webapp.domain.InstagramUser;
+import com.multiheaded.webapp.domain.SignedInstagramUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface InstagramUserRepository extends JpaRepository<InstagramUser, Long> {
     Optional<InstagramUser> findByUsername(String username);
 
-    /*
-    Page<InstagramUser> findByCreatedBy(Long userId, Pageable pageable);
-    // TODO Think if we should store dependencies of other iUsers in DB, or call them directly every time
-    long countByCreatedBy(Long instaUserId);
-    */
+    Set<InstagramUser> findByIdIn(List<Long> instaUserIds);
 
-    List<InstagramUser> findByIdIn(List<Long> instaUserIds);
-
-    List<InstagramUser> findByIdIn(List<Long> instaUserIds, Sort sort);
+    Set<InstagramUser> findByIdIn(List<Long> instaUserIds, Sort sort);
 }
