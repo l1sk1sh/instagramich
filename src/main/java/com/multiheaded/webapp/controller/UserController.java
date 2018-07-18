@@ -66,8 +66,7 @@ public class UserController {
         return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt());
     }
 
-    // TODO Fix it, it doesn't work
-    @GetMapping("/users/{username}/signedInstagramUsers")
+    @GetMapping("/users/{username}/sUsers")
     @PreAuthorize("#username == principal.username")
     public PagedResponse<SignedInstagramUserResponse> getSignedInstagramUsersCreatedBy(@PathVariable(value = "username") String username,
                                                                         @CurrentUser UserPrincipal currentUser,
@@ -75,5 +74,16 @@ public class UserController {
                                                                         @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         return sService.getSignedInstagramUsersCreatedBy(username, currentUser, page, size);
     }
+
+    @GetMapping("/users/{username}/{sUser}/followers")
+    @PreAuthorize("#username == principal.username")
+    public PagedResponse<InstagramUserResponse> getFollowersOfSignedIntagramUser(@PathVariable(value = "username") String username,
+                                                                            @PathVariable(value = "sUser") String sUsername,
+                                                                            @CurrentUser UserPrincipal currentUser,
+                                                                            @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                            @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+        return sService.getFollowersOfSignedIntagramUser(username, sUsername, currentUser, page, size);
+    }
+
 
 }

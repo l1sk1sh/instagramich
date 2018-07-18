@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -26,12 +27,16 @@ public interface SignedInstagramUserRepository extends JpaRepository<SignedInsta
 
     Set<SignedInstagramUser> findByIdIn(List<Long> instaUserIds, Sort sort);
 
+    @Query(value = "SELECT siu FROM SignedInstagramUser siu " +
+            "JOIN siu.iUser iu WHERE iu.username = :username")
+    Optional<SignedInstagramUser> findSignedInstagramUserByInstagramUsername(@Param("username") String username);
+
     @Query("SELECT f FROM SignedInstagramUser siu " +
-            "JOIN siu.followers f JOIN siu.instagramUser iu1 WHERE iu1.username = :username")
+            "JOIN siu.followers f JOIN siu.iUser iu1 WHERE iu1.username = :username")
     Set<InstagramUser> findFollowersBySignedUsername(@Param("username") String username);
 
     @Query("SELECT f FROM SignedInstagramUser siu " +
-            "JOIN siu.followings f JOIN siu.instagramUser iu1 WHERE iu1.username = :username")
+            "JOIN siu.followings f JOIN siu.iUser iu1 WHERE iu1.username = :username")
     Set<InstagramUser> findFollowingsBySignedUsername(@Param("username") String username);
 
 }

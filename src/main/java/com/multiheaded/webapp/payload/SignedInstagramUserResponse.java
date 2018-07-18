@@ -7,11 +7,11 @@ import java.util.Set;
 public class SignedInstagramUserResponse {
     private Long id;
 
-    private InstagramUser instagramUser;
+    private InstagramUser iUser;
 
-    private Set<InstagramUser> followers;
+    private int followersCount;
 
-    private Set<InstagramUser> followings;
+    private int followingsCount;
 
     public Long getId() {
         return id;
@@ -21,27 +21,27 @@ public class SignedInstagramUserResponse {
         this.id = id;
     }
 
-    public InstagramUser getInstagramUser() {
-        return instagramUser;
+    public InstagramUser getiUser() {
+        return iUser;
     }
 
-    public void setInstagramUser(InstagramUser instagramUser) {
-        this.instagramUser = instagramUser;
+    public void setiUser(InstagramUser iUser) {
+        this.iUser = iUser;
     }
 
-    public Set<InstagramUser> getFollowers() {
-        return followers;
+    public int getFollowersCount() {
+        return followersCount;
     }
 
-    public void setFollowers(Set<InstagramUser> followers) {
-        this.followers = followers;
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
     }
 
-    public Set<InstagramUser> getFollowings() {
-        return followings;
+    public int getFollowingsCount() {
+        return followingsCount;
     }
 
-    public void setFollowings(Set<InstagramUser> followings) {
-        this.followings = followings;
+    public void setFollowingsCount(int followingsCount) {
+        this.followingsCount = followingsCount;
     }
 }

@@ -20,18 +20,18 @@ public class FollowTest {
     private String username;
 
     @Autowired
-    SignedInstagramUserRepository sRepo;
+    SignedInstagramUserRepository sRepository;
 
     @Before
     public void init() {
-        SignedInstagramUser sUser = sRepo.findById(1L).orElseThrow(() ->
+        SignedInstagramUser sUser = sRepository.findById(1L).orElseThrow(() ->
                 new ResourceNotFoundException("SignedInstagramUser", "id", "1"));
         username = sUser.getInstagramUser().getUsername();
     }
 
     @Test
     public void findFollowers() {
-        Set<InstagramUser> followers = sRepo.findFollowersBySignedUsername(username);
+        Set<InstagramUser> followers = sRepository.findFollowersBySignedUsername(username);
         System.out.println("Followers of signed user: " + username);
         System.out.println(Arrays.toString(followers.toArray()));
 
@@ -39,7 +39,7 @@ public class FollowTest {
 
     @Test
     public void findFollowings() {
-        Set<InstagramUser> followings = sRepo.findFollowingsBySignedUsername(username);
+        Set<InstagramUser> followings = sRepository.findFollowingsBySignedUsername(username);
         System.out.println("Followings of signed user: " + username);
         System.out.println(Arrays.toString(followings.toArray()));
     }

@@ -1,9 +1,11 @@
 package com.multiheaded.webapp.service;
 
+import com.multiheaded.webapp.domain.InstagramUser;
 import com.multiheaded.webapp.domain.SignedInstagramUser;
 import com.multiheaded.webapp.domain.User;
 import com.multiheaded.webapp.exception.BadRequestException;
 import com.multiheaded.webapp.exception.ResourceNotFoundException;
+import com.multiheaded.webapp.payload.InstagramUserResponse;
 import com.multiheaded.webapp.payload.PagedResponse;
 import com.multiheaded.webapp.payload.SignedInstagramUserResponse;
 import com.multiheaded.webapp.repo.InstagramUserRepository;
@@ -15,12 +17,10 @@ import com.multiheaded.webapp.util.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +39,8 @@ public class SignedInstagramUserService {
     private static final Logger logger = LoggerFactory.getLogger(SignedInstagramUserService.class);
 
     public PagedResponse<SignedInstagramUserResponse> getSignedInstagramUsersCreatedBy(
-            String username, UserPrincipal currentUser, int page, int size) {
+            String username, UserPrincipal currentUser, int page, int size
+    ) {
         validatePageNumberAndSize(page, size);
 
         // TODO ADD SECURITY using currentUser
@@ -62,6 +63,38 @@ public class SignedInstagramUserService {
 
         return new PagedResponse<>(sUserResponses, sUsers.getNumber(),
                 sUsers.getSize(), sUsers.getTotalElements(), sUsers.getTotalPages(), sUsers.isLast());
+    }
+
+    public PagedResponse<InstagramUserResponse> getFollowersOfSignedIntagramUser(
+            String username, String sUsername, UserPrincipal currentUser, int page, int size
+    ) {
+        validatePageNumberAndSize(page, size);
+
+        // TODO ADD SECURITY using currentUser
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        // Retrieve signed instagram account by sUsername
+        SignedInstagramUser sUser = sRepository.findSignedInstagramUserByInstagramUsername(sUsername)
+                .orElseThrow(() -> new ResourceNotFoundException("SignedInstagramUser", "username", sUsername));
+
+        // Retrieve all followers for this signed instagram user
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        List<InstagramUser> listOfFollowers = new ArrayList<>(sUser.getFollowers());
+        Page<InstagramUser> followers = new PageImpl<>(listOfFollowers, pageable, listOfFollowers.size());
+
+        if (followers.getNumberOfElements() == 0) {
+            return new PagedResponse<>(Collections.emptyList(), followers.getNumber(),
+                    followers.getSize(), followers.getTotalElements(), followers.getTotalPages(), followers.isLast());
+        }
+
+        List<InstagramUserResponse> followerReponses =
+                followers.map(ModelMapper::mapInstagramUsertoResponse).getContent();
+
+        return new PagedResponse<>(followerReponses, followers.getNumber(),
+                followers.getSize(), followers.getTotalElements(), followers.getTotalPages(), followers.isLast());
+
     }
 
     private void validatePageNumberAndSize(int page, int size) {
