@@ -5,21 +5,21 @@ import com.multiheaded.webapp.domain.SignedInstagramUser;
 import com.multiheaded.webapp.domain.User;
 import com.multiheaded.webapp.exception.BadRequestException;
 import com.multiheaded.webapp.exception.ResourceNotFoundException;
-import com.multiheaded.webapp.payload.InstagramUserResponse;
-import com.multiheaded.webapp.payload.PagedResponse;
-import com.multiheaded.webapp.payload.SignedInstagramUserResponse;
+import com.multiheaded.webapp.payload.*;
 import com.multiheaded.webapp.repo.InstagramUserRepository;
 import com.multiheaded.webapp.repo.SignedInstagramUserRepository;
 import com.multiheaded.webapp.repo.UserRepository;
-import com.multiheaded.webapp.security.UserPrincipal;
 import com.multiheaded.webapp.util.AppConstants;
+import com.multiheaded.webapp.util.MockModel;
 import com.multiheaded.webapp.util.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,12 +38,21 @@ public class SignedInstagramUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(SignedInstagramUserService.class);
 
+    public SignedInstagramUserResponse getSignedInstagramUserBySUsername(String username, String sUsername) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        SignedInstagramUser sUser = sRepository.findBySUsernameAndUserId(user.getId(), sUsername)
+                .orElseThrow(() -> new ResourceNotFoundException("sUser", "sUsername", sUsername));
+
+        return ModelMapper.mapSignedInstagramUserToResponse(sUser);
+    }
+
     public PagedResponse<SignedInstagramUserResponse> getSignedInstagramUsersCreatedBy(
-            String username, UserPrincipal currentUser, int page, int size
+            String username, int page, int size
     ) {
         validatePageNumberAndSize(page, size);
-
-        // TODO ADD SECURITY using currentUser
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
@@ -66,18 +75,18 @@ public class SignedInstagramUserService {
     }
 
     public PagedResponse<InstagramUserResponse> getFollowersOfSignedIntagramUser(
-            String username, String sUsername, UserPrincipal currentUser, int page, int size
+            String username, String sUsername, int page, int size
     ) {
         validatePageNumberAndSize(page, size);
 
-        // TODO ADD SECURITY using currentUser
+        // TODO Maybe it is easier to use principal then to fetch user from DB
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
         // Retrieve signed instagram account by sUsername
-        SignedInstagramUser sUser = sRepository.findSignedInstagramUserByInstagramUsername(sUsername)
-                .orElseThrow(() -> new ResourceNotFoundException("SignedInstagramUser", "username", sUsername));
+        SignedInstagramUser sUser = sRepository.findBySUsernameAndUserId(user.getId(), sUsername)
+                .orElseThrow(() -> new ResourceNotFoundException("SignedInstagramUser", "sUsername", sUsername));
 
         // Retrieve all followers for this signed instagram user
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
@@ -89,12 +98,37 @@ public class SignedInstagramUserService {
                     followers.getSize(), followers.getTotalElements(), followers.getTotalPages(), followers.isLast());
         }
 
-        List<InstagramUserResponse> followerReponses =
+        List<InstagramUserResponse> followerResponses =
                 followers.map(ModelMapper::mapInstagramUsertoResponse).getContent();
 
-        return new PagedResponse<>(followerReponses, followers.getNumber(),
+        return new PagedResponse<>(followerResponses, followers.getNumber(),
                 followers.getSize(), followers.getTotalElements(), followers.getTotalPages(), followers.isLast());
 
+    }
+
+    public SignedInstagramUser createSignedInstagramUser(SignedInstagramUserAuthRequest request) {
+        // Here we login to Instagram API to check all the shit, and if everything is fine return InstagramUser
+        // TODO Create REST Consumer for Instagram4j API
+        // THIS IS MOCK
+        InstagramUser iUser = MockModel.mockInstagramUser(request.getUsername());
+        try {
+            iUser = iRepository.save(iUser);
+        } catch (DataIntegrityViolationException ex) {
+            logger.warn("Current iUser {} was found in DB. Using existing iUser", iUser.getUsername());
+            iUser = iRepository.findByUsername(request.getUsername()).orElseThrow(() ->
+                new ResourceNotFoundException("iUser", "iUsername", request.getUsername()));
+        }
+
+        SignedInstagramUser sUser = MockModel.mockSignedInstagramUser(iUser, request.getPassword());
+        try {
+            sUser = sRepository.save(sUser);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("Provided sUser {} is already being used", iUser.getUsername());
+            throw new BadRequestException("Provided user is already being used. " +
+                    "System doesn't support Instagram accounts re-usage");
+        }
+
+        return sUser;
     }
 
     private void validatePageNumberAndSize(int page, int size) {

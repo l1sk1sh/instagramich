@@ -28,15 +28,16 @@ public interface SignedInstagramUserRepository extends JpaRepository<SignedInsta
     Set<SignedInstagramUser> findByIdIn(List<Long> instaUserIds, Sort sort);
 
     @Query(value = "SELECT siu FROM SignedInstagramUser siu " +
-            "JOIN siu.iUser iu WHERE iu.username = :username")
-    Optional<SignedInstagramUser> findSignedInstagramUserByInstagramUsername(@Param("username") String username);
+            "JOIN siu.iUser iu WHERE iu.username = :sUsername AND siu.createdBy = :userId")
+    Optional<SignedInstagramUser> findBySUsernameAndUserId(@Param("userId") Long userId,
+                                                           @Param("sUsername") String sUsername);
 
     @Query("SELECT f FROM SignedInstagramUser siu " +
-            "JOIN siu.followers f JOIN siu.iUser iu1 WHERE iu1.username = :username")
-    Set<InstagramUser> findFollowersBySignedUsername(@Param("username") String username);
+            "JOIN siu.followers f JOIN siu.iUser iu1 WHERE iu1.username = :sUsername")
+    Set<InstagramUser> findFollowersBySUsername(@Param("sUsername") String sUsername);
 
     @Query("SELECT f FROM SignedInstagramUser siu " +
-            "JOIN siu.followings f JOIN siu.iUser iu1 WHERE iu1.username = :username")
-    Set<InstagramUser> findFollowingsBySignedUsername(@Param("username") String username);
+            "JOIN siu.followings f JOIN siu.iUser iu1 WHERE iu1.username = :sUsername")
+    Set<InstagramUser> findFollowingsBySUsername(@Param("sUsername") String sUsername);
 
 }

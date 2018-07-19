@@ -31,7 +31,7 @@ public class FollowTest {
 
     @Test
     public void findFollowers() {
-        Set<InstagramUser> followers = sRepository.findFollowersBySignedUsername(username);
+        Set<InstagramUser> followers = sRepository.findFollowersBySUsername(username);
         System.out.println("Followers of signed user: " + username);
         System.out.println(Arrays.toString(followers.toArray()));
 
@@ -39,7 +39,7 @@ public class FollowTest {
 
     @Test
     public void findFollowings() {
-        Set<InstagramUser> followings = sRepository.findFollowingsBySignedUsername(username);
+        Set<InstagramUser> followings = sRepository.findFollowingsBySUsername(username);
         System.out.println("Followings of signed user: " + username);
         System.out.println(Arrays.toString(followings.toArray()));
     }

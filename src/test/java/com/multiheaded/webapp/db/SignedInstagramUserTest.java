@@ -55,9 +55,6 @@ public class SignedInstagramUserTest {
         SignedInstagramUser sUser = new SignedInstagramUser();
         sUser.setPassword("asdsadasdasd");
         sUser.setInstagramUser(user);
-        sUser.setUser(userRepository.findById(4L).orElseThrow(() -> new ResourceNotFoundException("User", "username", "valerchik2")));
-
-        Assert.assertNotNull(sUser.getUser());
 
         sRepository.save(sUser);
         System.out.println("");

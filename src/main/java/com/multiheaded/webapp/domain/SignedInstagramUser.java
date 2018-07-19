@@ -23,13 +23,9 @@ public class SignedInstagramUser extends UserDateAudit {
     @NotBlank
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "instagram_user_id", nullable = false)
     private InstagramUser iUser;
-
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "signed_user_followers",
@@ -71,14 +67,6 @@ public class SignedInstagramUser extends UserDateAudit {
 
     public void setInstagramUser(InstagramUser iUser) {
         this.iUser = iUser;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Set<InstagramUser> getFollowers() {
