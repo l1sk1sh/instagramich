@@ -55,6 +55,7 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
+// TODO Create dev and non dev launch tasks
 bootRun {
     dependsOn
     jvmArgs = ["-Dspring.profiles.active=dev"]
