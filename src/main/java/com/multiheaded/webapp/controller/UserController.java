@@ -57,6 +57,7 @@ public class UserController {
         return new UserIdentityAvailability(isAvailable);
     }
 
+    @Deprecated
     @GetMapping("/users/{username}")
     @PostAuthorize("returnObject.username == principal.username")
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) {

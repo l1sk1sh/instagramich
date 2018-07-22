@@ -1,6 +1,7 @@
 buildscript {
     // TODO Global check for latest versions
     // TODO Create custom run configurations for different environments
+    // TODO Update clean with .js clearing
     ext {
         springBootVersion   = "2.0.2.RELEASE"
         dockerPluginVersion = "3.2.5" // TODO Update version
