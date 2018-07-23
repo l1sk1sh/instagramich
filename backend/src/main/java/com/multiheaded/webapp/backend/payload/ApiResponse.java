@@ -1,4 +1,4 @@
-package com.multiheaded.webapp.payload;
+package com.multiheaded.webapp.backend.payload;
 
 public class ApiResponse {
     private Boolean success;
