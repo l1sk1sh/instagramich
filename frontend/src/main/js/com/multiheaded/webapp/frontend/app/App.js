@@ -1,5 +1,5 @@
 'use strict';
-
+// TODO implement translations (react-localize-redux)
 import React, { Component } from 'react';
 import '../assets/css/App.css';
 import {
