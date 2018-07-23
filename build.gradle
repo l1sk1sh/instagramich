@@ -1,89 +1,40 @@
-buildscript {
-    // TODO Global check for latest versions
-    // TODO Create custom run configurations for different environments
-    // TODO Update clean with .js clearing
-    ext {
-        springBootVersion   = "2.0.2.RELEASE"
-        dockerPluginVersion = "3.2.5" // TODO Update version
-        nodePluginVersion   = "1.2.0"
+// TODO Global check for latest versions
+// TODO Create custom run configurations for different environments
+// TODO Update clean with .js clearing
 
-        mariaVersion        = "2.2.5"
-        jwtVersion          = "0.9.0"
-        apachCommVersion    = "3.7"
+plugins {
+    id "com.bmuschko.docker-remote-api" version "3.3.4"
+    id "idea"
+}
+
+allprojects {
+    apply plugin: 'java'
+
+    version = '0.0.1'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    ext {
+        baseName = "com.multiheaded.webapp"
     }
 
     repositories {
         jcenter()
-        maven {
-            url "https://plugins.gradle.org/m2/"
+        mavenLocal()
+    }
+
+    buildscript {
+        repositories {
+            jcenter()
         }
     }
-
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}")
-        classpath("com.moowork.gradle:gradle-node-plugin:${nodePluginVersion}")
-    }
 }
 
-apply plugin: "java"
-apply plugin: "idea"
-apply plugin: "org.springframework.boot"
-apply plugin: "io.spring.dependency-management"
-apply plugin: "com.moowork.node"
-apply plugin: "com.bmuschko.docker-remote-api"
-
-repositories {
-    mavenLocal()
-    jcenter()
+subprojects {
 }
 
-dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-starter-data-rest")
-
-    compile("org.mariadb.jdbc:mariadb-java-client:${mariaVersion}")
-    compile("io.jsonwebtoken:jjwt:${jwtVersion}")
-    compile("org.apache.commons:commons-lang3:${apachCommVersion}")
-
-    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-}
-
-// TODO Create dev and non dev launch tasks
-bootRun {
-    dependsOn
-    jvmArgs = ["-Dspring.profiles.active=dev"]
-}
-
-build {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    version = "0.0.1"
-
-    jar {
-        // TODO Fix dependency packaging
-        manifest {
-            attributes "Implementation-Title": "Packaged webapp",
-                    "Implementation-Version": version,
-                    "Main-Class": "com.multiheaded.webapp.Application"
-        }
-
-        from {
-            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-        }
-    }
-
-    bootJar {
-        bootJar.dependsOn jar
-        baseName = "com.multiheaded.webapp"
-    }
+project(':iapi') {
 }
 
 import com.bmuschko.gradle.docker.tasks.image.*
@@ -148,24 +99,4 @@ docker {
                 throw exception
         }
     }
-}
-
-node {
-    version = "10.5.0"
-    npmVersion = "6.1.0"
-    download = true
-
-    task npmWatch(type: NpmTask) {
-        args = ['run', 'watch']
-    }
-
-    task npmWebpackBuildProd(type: NpmTask) {
-        args = ['run', 'buildProd']
-    }
-
-    task npmWebpackBuildDev(type: NpmTask) {
-        args = ['run', 'buildDev']
-    }
-
-    bootRun.dependsOn npmWebpackBuildDev
 }
