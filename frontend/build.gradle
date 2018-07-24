@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/main/js"]
+        }
+    }
+    test {
+        java {
+            srcDirs = ["src/test/js"]
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+node {
+    version = "10.5.0"
+    npmVersion = "6.1.0"
+    download = true
+
+    task npmWatch(type: NpmTask) {
+        args = ['run', 'watch']
+    }
+
+    task npmWebpackBuildProd(type: NpmTask) {
+        args = ['run', 'build:prod']
+    }
+
+    task npmWebpackBuildDev(type: NpmTask) {
+        args = ['run', 'build:dev']
+    }
+
+    task npmStartDev(type: NpmTask) {
+        args = ['run', 'start:dev']
+    }
+}

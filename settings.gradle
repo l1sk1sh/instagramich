@@ -1,0 +1,6 @@
+rootProject.name = 'webapp'
+
+include 'backend'
+include 'frontend'
+include 'iapi'
+
