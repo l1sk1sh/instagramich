@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -5,17 +6,26 @@ module.exports = {
     devtool: 'sourcemaps',
     cache: true,
     output: {
-        path: __dirname,
-        filename: '../backend/src/main/resources/static/js/bundle.js',
-        publicPath: '/'
+        path: path.resolve(__dirname, "../backend/src/main/resources/static/js"),
+        filename: 'bundle.js',
         //TODO Versioning of JS
         //TODO building of CSS
     },
     devServer: {
-        contentBase: path.join(__dirname, '../backend/src/main/resources/static/'),
+        hot: true,
+        inline: true,
+        // host: '0.0.0.0', // for Docker
+        publicPath: '/js/',
+        contentBase: path.join(__dirname, '../backend/src/main/resources/static'),
         historyApiFallback: true,
+        watchContentBase: true,
         compress: true,
         port: 9000
+    },
+    optimization: {
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false,
     },
     module: {
         rules: [
@@ -39,5 +49,8 @@ module.exports = {
                 ],
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 };

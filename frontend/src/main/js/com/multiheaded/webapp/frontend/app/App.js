@@ -20,8 +20,7 @@ import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
-import SInstagramUserList from '../model/instagram/SInstagramUserList'
-import NewSInstagramUser from '../model/instagram/NewSIntagramUser'
+import SIUserList from '../model/instagram/SIUserList'
 
 import { Layout, notification } from 'antd';
 const { Content } = Layout;
@@ -65,7 +64,6 @@ class App extends Component {
 
     componentWillMount() {
         this.loadCurrentUser();
-        console.log(this.props)
     }
 
     handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
@@ -105,16 +103,14 @@ class App extends Component {
 
                 <Content className="app-content">
                     <div className="container">
-                        <Switch location={this.props.history.location}> // pass location to switch
+                        <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />} />
                             <Route path="/signup" component={Signup}> </Route>
                             <PrivateRoute authenticated={this.state.isAuthenticated} path="/profile"
                                           component={Profile} currentUser={this.state.currentUser} />
                             <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers"
-                                          component={SInstagramUserList} currentUser={this.state.currentUser} />
-                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers/new"
-                                          component={NewSInstagramUser} currentUser={this.state.currentUser} />
+                                          component={SIUserList} currentUser={this.state.currentUser} />
                             <PrivateRoute authenticated={this.state.isAuthenticated} path="/dashboard"
                                           component={Dashboard} currentUser={this.state.currentUser} />
                             <Route component={NotFound} />
