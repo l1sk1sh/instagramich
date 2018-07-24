@@ -47,7 +47,7 @@ class Profile extends Component {
     }
       
     componentDidMount() {
-        const username = this.props.match.params.username;
+        const username = this.props.currentUser.username;
         this.loadUserProfile(username);
     }
 

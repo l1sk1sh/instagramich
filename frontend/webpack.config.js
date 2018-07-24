@@ -6,12 +6,14 @@ module.exports = {
     cache: true,
     output: {
         path: __dirname,
-        filename: '../backend/src/main/resources/static/js/bundle.js'
+        filename: '../backend/src/main/resources/static/js/bundle.js',
+        publicPath: '/'
         //TODO Versioning of JS
         //TODO building of CSS
     },
     devServer: {
         contentBase: path.join(__dirname, '../backend/src/main/resources/static/'),
+        historyApiFallback: true,
         compress: true,
         port: 9000
     },
@@ -20,8 +22,7 @@ module.exports = {
             {
                 test: path.join(__dirname, '.'),
                 exclude: [
-                    /(node_modules)/,
-                    /\.svg$/
+                    /(node_modules)/
                 ],
                 loader: 'babel-loader',
                 query: {
@@ -36,15 +37,7 @@ module.exports = {
                     { loader: "css-loader?sourceMap" },
                     { loader: 'less-loader', options: { javascriptEnabled: true } }
                 ],
-            },
-            {
-                test: /\.svg$/,
-                use: [{
-                    loader: 'babel-loader'
-                }, {
-                    loader: 'react-svg-loader'
-                }]
-            },
+            }
         ]
     }
 };

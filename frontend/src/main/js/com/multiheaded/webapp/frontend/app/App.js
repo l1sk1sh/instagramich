@@ -11,13 +11,17 @@ import {
 import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 
+import Home from '../model/Home'
 import Login from '../model/user/Login';
 import Signup from '../model/user/Signup';
+import Dashboard from '../model/user/Dashboard';
 import Profile from '../model/user/Profile';
 import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
+import SInstagramUserList from '../model/instagram/SInstagramUserList'
+import NewSInstagramUser from '../model/instagram/NewSIntagramUser'
 
 import { Layout, notification } from 'antd';
 const { Content } = Layout;
@@ -35,7 +39,7 @@ class App extends Component {
         this.handleLogin = this.handleLogin.bind(this);
 
         notification.config({
-            placement: 'topRight',
+            placement: 'bottomRight',
             top: 70,
             duration: 3,
         });
@@ -61,6 +65,7 @@ class App extends Component {
 
     componentWillMount() {
         this.loadCurrentUser();
+        console.log(this.props)
     }
 
     handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
@@ -100,13 +105,19 @@ class App extends Component {
 
                 <Content className="app-content">
                     <div className="container">
-                        <Switch>
-                            <Route path="/login"
-                                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}> </Route>
+                        <Switch location={this.props.history.location}> // pass location to switch
+                            <Route exact path="/" component={Home} />
+                            <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />} />
                             <Route path="/signup" component={Signup}> </Route>
-                            <Route path="/users/:username"
-                                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
-                            </Route>
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/profile"
+                                          component={Profile} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers"
+                                          component={SInstagramUserList} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers/new"
+                                          component={NewSInstagramUser} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/dashboard"
+                                          component={Dashboard} currentUser={this.state.currentUser} />
+                            <Route component={NotFound} />
                         </Switch>
                     </div>
                 </Content>

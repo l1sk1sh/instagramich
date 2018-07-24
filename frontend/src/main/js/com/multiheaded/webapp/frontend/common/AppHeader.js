@@ -24,12 +24,12 @@ class AppHeader extends Component {
         let menuItems;
         if (this.props.currentUser) {
             menuItems = [
-                <Menu.Item key="/">
-                    <Link to="/">
+                <Menu.Item key="/dashboard">
+                    <Link to="/dashboard">
                         <Icon type="home" className="nav-icon"/>
                     </Link>
                 </Menu.Item>,
-                <Menu.Item key="/instagram_users" className="instagram-users-menu">
+                <Menu.Item key="/sinstagram-users" className="sinstagram-users-menu">
                     <InstagramUsersDropdownMenu
                         currentUser={this.props.currentUser}
                         handleMenuClick={this.handleMenuClick}/>
@@ -81,9 +81,9 @@ function ProfileDropdownMenu(props) {
                     @{props.currentUser.username}
                 </div>
             </Menu.Item>
-            <Menu.Divider/>
+            <Menu.Divider />
             <Menu.Item key="profile" className="dropdown-item">
-                <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
+                <Link to={`/profile`}>Profile</Link>
             </Menu.Item>
             <Menu.Item key="logout" className="dropdown-item">
                 Logout
@@ -105,9 +105,25 @@ function ProfileDropdownMenu(props) {
 
 function InstagramUsersDropdownMenu(props) {
     const dropdownMenu = (
-        <Menu onClick={props.handleMenuClick} className="instagram-users-dropdown-menu">
-            <!-- TODO Create list with 'connected accounts', 'manage accounts'-->
+        <Menu onClick={props.handleMenuClick} className="sinstagram-users-dropdown-menu">
+            <Menu.Item key="sinstagram-users" className="dropdown-item">
+                <Link to={`/susers`}>Your Instagram Accounts</Link>
+            </Menu.Item>
+            <Menu.Item key="sinstagram-users-new" className="dropdown-item">
+                <Link to={`/susers/new`}>Add New Instagram Account</Link>
+            </Menu.Item>
         </Menu>
+    );
+
+    return (
+      <Dropdown
+          overlay={dropdownMenu}
+          trigger={['click']}
+          getPopupContainer={() => document.getElementsByClassName('sinstagram-users-menu')[0]}>
+          <a className="ant-dropdown-link">
+              <Icon type="instagram" className="nav-icon" style={{marginRight: 0}}/> <Icon type="down"/>
+          </a>
+      </Dropdown>
     );
 }
 

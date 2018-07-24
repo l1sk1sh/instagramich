@@ -71,3 +71,28 @@ export function getUserProfile(username) {
         method: 'GET'
     });
 }
+
+export function getAllSInstagramUsers(page, size) {
+    page = page || 0;
+    size = size || SINSTAGRAM_LIST_SIZE;
+
+    return request({
+        url: API_BASE_URL + "/susers?page=" + page + "&size=" + size,
+        method: 'GET'
+    });
+}
+
+export function getSInstagramUserBySUsername(username) {
+    return request({
+        url: API_BASE_URL + "/susers/" + username,
+        method: 'GET'
+    });
+}
+
+export function createSInstagramUser(sInstagramUserData) {
+    return request({
+        url: API_BASE_URL + "/susers/authorization",
+        method: 'POST',
+        body: JSON.stringify(sInstagramUserData)
+    });
+}
