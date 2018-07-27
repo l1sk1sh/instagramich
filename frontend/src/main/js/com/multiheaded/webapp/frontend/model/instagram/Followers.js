@@ -5,7 +5,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-class NewSIUser extends Component {
+class Followers extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,9 +22,11 @@ class NewSIUser extends Component {
     // Functions
     render() {
         return (
-          <div>Hi from NewSIUser</div>
+            <div>Hi from Followers
+            
+            </div>
         );
     };
 }
 
-export default NewSIUser;
+export default Followers;

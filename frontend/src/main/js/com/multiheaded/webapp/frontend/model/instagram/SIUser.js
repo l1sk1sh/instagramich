@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 
-class SInstagramUser extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: null,
-            loading: false
-        }
-    }
-
+class SIUser extends Component {
     render() {
         return (
-            <div>Hi from SInstagramUser</div>
+            <div className="suser-content">
+                <div className="suser-header">
+                    <div></div>
+                    {this.props.suser.iUser.username}
+                </div>
+
+            </div>
         );
     };
 }
 
-export default SInstagramUser;
+export default SIUser;
