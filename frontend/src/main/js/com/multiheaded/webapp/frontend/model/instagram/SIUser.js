@@ -5,7 +5,7 @@ class SIUser extends Component {
         return (
             <div className="suser-content">
                 <div className="suser-header">
-                    <div></div>
+                    <div>Hello from SIUser</div>
                     {this.props.suser.iUser.username}
                 </div>
 

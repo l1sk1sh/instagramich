@@ -4,6 +4,7 @@ import { getAllSInstagramUsers } from '../../util/APIUtils';
 import LoadingIndicator  from '../../common/LoadingIndicator';
 import { Button, Icon } from 'antd';
 import SIUser from './SIUser';
+import NewSIUser from "./NewSIUser";
 
 // TODO Add handleSuserChange for in-live changing
 
@@ -97,7 +98,8 @@ class SIUserList extends Component {
                 {
                     !this.state.isLoading && this.state.susers.length === 0 ? (
                         <div className="no-susers-found">
-                            <span>No Polls Found. Please, use form below to add new user.</span>
+                            <span>You do not have connected Instagram Accounts. Please, use form below to add new user.</span>
+                            <NewSIUser />
                         </div>
                     ): null
                 }

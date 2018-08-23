@@ -112,12 +112,6 @@ function InstagramUsersDropdownMenu(props) {
             <Menu.Item key="sinstagram-users-new" className="dropdown-item">
                 <Link to={`/susers/new`}>Add New Instagram Account</Link>
             </Menu.Item>
-            <Menu.Item key="sinstagram-user" className="dropdown-item">
-                <Link to={`/susers/:username`}>Test Instagram Account</Link>
-            </Menu.Item>
-            <Menu.Item key="sinstagram-user-followers" className="dropdown-item">
-                <Link to={`/susers/:username/followers`}>Test Instagram Account Followers</Link>
-            </Menu.Item>
         </Menu>
     );
 

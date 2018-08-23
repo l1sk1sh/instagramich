@@ -10,6 +10,7 @@ plugins {
     id "com.moowork.node" version "1.2.0"
 }
 
+// This is a tweak for IDEA src recognition
 sourceSets {
     main {
         java {
