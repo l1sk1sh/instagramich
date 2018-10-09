@@ -33,6 +33,9 @@ public class SignedInstagramUser extends UserDateAudit {
             inverseJoinColumns = @JoinColumn(name = "instagram_user_id", referencedColumnName = "id"))
     private Set<InstagramUser> followings;
 
+    @OneToOne
+    private SignedInstagramUserCookieStore cookieStore;
+
     public SignedInstagramUser() {}
 
     public SignedInstagramUser(String password) {
@@ -77,5 +80,13 @@ public class SignedInstagramUser extends UserDateAudit {
 
     public void setFollowings(Set<InstagramUser> followings) {
         this.followings = followings;
+    }
+
+    public SignedInstagramUserCookieStore getCookieStore() {
+        return cookieStore;
+    }
+
+    public void setCookieStore(SignedInstagramUserCookieStore cookieStore) {
+        this.cookieStore = cookieStore;
     }
 }

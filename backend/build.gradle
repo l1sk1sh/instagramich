@@ -34,13 +34,14 @@ dependencies {
 
 bootRun {
     dependsOn
-    jvmArgs = ["-Dspring.profiles.active=dev"]
+    // TODO Change run configurations (another type of declaration)
+    jvmArgs = ["-Dspring.profiles.active=development"]
 }
 
 build {
 
     jar {
-        // TODO Fix dependency packaging
+        // TODO Fix dependencies packaging (packaged version doesn't work)
         manifest {
             attributes "Implementation-Title": "Packaged webapp",
                     "Implementation-Version": version,

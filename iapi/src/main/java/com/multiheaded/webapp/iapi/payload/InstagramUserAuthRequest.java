@@ -4,12 +4,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class InstagramUserAuthRequest {
-    @NotBlank
-    @Size(max = 30)
     private String username;
 
-    @NotBlank
     private String password;
+    
+    private long id;
 
     public String getUsername() {
         return username;
@@ -25,5 +24,13 @@ public class InstagramUserAuthRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

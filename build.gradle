@@ -67,6 +67,7 @@ docker {
     }
 
     task createDbContainer(type: DockerCreateContainer) {
+        // TODO Fix dependency. It creates new image every time
         dependsOn buildDbImage
         targetImageId { buildDbImage.getImageId() }
         containerName = 'mariadb'

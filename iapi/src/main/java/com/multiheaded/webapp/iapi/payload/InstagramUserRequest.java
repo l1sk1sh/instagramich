@@ -3,16 +3,15 @@ package com.multiheaded.webapp.iapi.payload;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class InstagramUserRequest {
+public class InstagramUserRequest extends AbstractSignedRequest {
     @NotBlank
-    @Size(max = 30)
-    private String username;
+    private String handle;
 
-    public String getUsername() {
-        return username;
+    public String getHandle() {
+        return handle;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setHandle(String handle) {
+        this.handle = handle;
     }
 }
