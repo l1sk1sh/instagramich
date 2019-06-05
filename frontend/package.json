@@ -3,28 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "description": "webapp react component",
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:multiheaded/webapp.git"
-  },
-  "keywords": [
-    "rest",
-    "spring",
-    "data",
-    "react",
-    "instagram"
-  ],
   "author": "multiheaded",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://bitbucket.org/multiheaded/webapp/issues?status=new&status=open"
-  },
-  "homepage": "https://bitbucket.org/multiheaded/webapp",
   "dependencies": {
     "npm": "^6.1.0",
     "style-loader": "^0.21.0",
     "css-loader": "^1.0.0",
-    "react-svg-loader": "^2.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
@@ -47,10 +31,10 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "babel-plugin-import": "^1.8.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-import": "^1.8.0"
+    "babel-plugin-transform-class-properties": "^6.24.1"
   },
   "babel": {
     "plugins": [

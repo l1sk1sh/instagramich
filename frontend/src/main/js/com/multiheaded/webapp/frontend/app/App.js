@@ -2,11 +2,7 @@
 // TODO implement translations (react-localize-redux)
 import React, { Component } from 'react';
 import '../assets/css/App.css';
-import {
-    Route,
-    withRouter,
-    Switch
-} from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 
 import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
@@ -20,10 +16,12 @@ import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
-import SInstagramUserList from '../model/instagram/SInstagramUserList'
-import NewSInstagramUser from '../model/instagram/NewSIntagramUser'
+import SIUserList from '../model/instagram/SIUserList'
+import SIUser from '../model/instagram/SIUser'
 
 import { Layout, notification } from 'antd';
+import NewSIUser from "../model/instagram/NewSIUser";
+import Followers from "../model/instagram/Followers";
 const { Content } = Layout;
 
 class App extends Component {
@@ -65,7 +63,6 @@ class App extends Component {
 
     componentWillMount() {
         this.loadCurrentUser();
-        console.log(this.props)
     }
 
     handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
@@ -105,18 +102,22 @@ class App extends Component {
 
                 <Content className="app-content">
                     <div className="container">
-                        <Switch location={this.props.history.location}> // pass location to switch
+                        <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />} />
                             <Route path="/signup" component={Signup}> </Route>
                             <PrivateRoute authenticated={this.state.isAuthenticated} path="/profile"
                                           component={Profile} currentUser={this.state.currentUser} />
-                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers"
-                                          component={SInstagramUserList} currentUser={this.state.currentUser} />
-                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers/new"
-                                          component={NewSInstagramUser} currentUser={this.state.currentUser} />
                             <PrivateRoute authenticated={this.state.isAuthenticated} path="/dashboard"
                                           component={Dashboard} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} exact path="/susers/new"
+                                          component={NewSIUser} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers/:susername/followers"
+                                          component={Followers} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/susers/:susername"
+                                          component={SIUser} currentUser={this.state.currentUser} />
+                            <PrivateRoute authenticated={this.state.isAuthenticated} exact path="/susers"
+                                          component={SIUserList} currentUser={this.state.currentUser} />
                             <Route component={NotFound} />
                         </Switch>
                     </div>

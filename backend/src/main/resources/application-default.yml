@@ -4,9 +4,6 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MariaDBDialect
-  data:
-    rest:
-      base-path: /api
   datasource:
     platform: mariadb
     url: jdbc:mysql://localhost:3306/main?serverTimezone=UTC
