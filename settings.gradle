@@ -1,1 +1,6 @@
-// Empty as for now. Expand when sub modules are added with the help of `include 'project.gradle'`
+rootProject.name = 'webapp'
+
+include 'backend'
+include 'frontend'
+include 'iapi'
+

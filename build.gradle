@@ -1,60 +1,102 @@
-// Initial gradle configuration. Pretty small and easy
+// TODO Global check for latest versions
+// TODO Create custom run configurations for different environments
+// TODO Update clean with .js clearing
 
-// The buildScript block determines what is available for rest of the build script
-buildscript {
-    // This repo is needed for `dependencies` inside buildScript block
+plugins {
+    id "com.bmuschko.docker-remote-api" version "3.3.4"
+    id "idea"
+}
+
+allprojects {
+    apply plugin: 'java'
+
+    version = '0.0.1'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    ext {
+        baseName = "com.multiheaded.webapp"
+    }
+
     repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
-    }
-}
-
-// This repo is needed for dependencies lower
-repositories {
-    mavenCentral()
-}
-
-// Easy enough, plugins for gradle with built in jobs
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management' // Used to manage dependencies...
-
-// JDK that we want to use for final compilation (do not forget to set same in the project settings manually)
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-// Self-explanatory - we use maven repo for this
-dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    // compile("org.springframework.boot:spring-boot-starter-security") // TODO Add this after configuration for initial settings
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE")
-    compile("org.webjars:bootstrap:4.1.0") // TODO Initial styles. Probably should change to our's
-    compile("com.h2database:h2") // TODO We might want to change this
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-}
-
-// Packaging into jar
-version = '0.0.1'
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Packaged webapp',
-                'Implementation-Version': version,
-                'Main-Class': 'com.multiheaded.webapp.Application'
+        jcenter()
+        mavenLocal()
     }
 
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    buildscript {
+        repositories {
+            jcenter()
+        }
     }
 }
 
-bootJar {
-    baseName = 'com.' + group + '.webapp'
+subprojects {
+}
+
+project(':iapi') {
+}
+
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
+import org.apache.tools.ant.taskdefs.condition.Os
+
+docker {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        url = 'tcp://127.0.0.1:2375' //Enable "Expose daemon :2735 without TSL" in Docker
+    } else {
+        url = 'unix:///var/run/docker.sock'
+    }
+
+    registryCredentials {
+        url = 'https://index.docker.io/v1/'
+        username = 'multiheaded'
+        password = 'superPassw0rd'
+        email = 'multiheaded@gmail.com'
+    }
+
+    task copyDockerJar(type: Copy) {
+        from "build/libs"
+        into ".docker/webapp"
+        rename "(.*).jar", "app.jar"
+    }
+
+    task buildDbImage(type: DockerBuildImage) {
+        inputDir = file('.docker/mariadb')
+        tag = "mariadb:latest"
+    }
+
+    task createDbContainer(type: DockerCreateContainer) {
+        dependsOn buildDbImage
+        targetImageId { buildDbImage.getImageId() }
+        containerName = 'mariadb'
+        portBindings = ['3306:3306']
+        // https://stackoverflow.com/questions/47836017/override-environment-variables-on-dockerstartcontainer
+        env = ["MYSQL_ROOT_PASSWORD=password", "MYSQL_DATABASE=main"]
+        onError { message ->
+            logger.quiet message.toString()
+        }
+    }
+
+    task startDbContainer(type: DockerStartContainer) {
+        dependsOn createDbContainer
+        targetContainerId { createDbContainer.getContainerName() }
+    }
+
+    task stopDbContainer(type: DockerStopContainer) {
+        targetContainerId { createDbContainer.getContainerName() }
+    }
+
+    task functionalTestDb(type: Test) {
+        dependsOn startDbContainer
+        finalizedBy stopDbContainer
+    }
+
+    task removeContainer(type: DockerRemoveContainer) {
+        targetContainerId { createDbContainer.getContainerName() }
+        onError { exception ->
+            if (!exception.message.contains('No such container'))
+                throw exception
+        }
+    }
 }

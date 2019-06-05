@@ -1,0 +1,20 @@
+package com.multiheaded.webapp.backend.repo;
+
+import com.multiheaded.webapp.backend.domain.InstagramUser;
+import com.multiheaded.webapp.backend.domain.SignedInstagramUser;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+@Repository
+public interface InstagramUserRepository extends JpaRepository<InstagramUser, Long> {
+    Optional<InstagramUser> findByUsername(String username);
+
+    Set<InstagramUser> findByIdIn(List<Long> instaUserIds);
+
+    Set<InstagramUser> findByIdIn(List<Long> instaUserIds, Sort sort);
+}
