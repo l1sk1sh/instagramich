@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "777095a9-919c-4256-bf19-8e9639c4e829",
+		"name": "Webapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "iapi",
+			"item": [
+				{
+					"name": "/api/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"oliver_johnson_work\",\n\t\"password\": \"QWEasd123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"handle\": \"github\",\n\t\"username\": \"oliver_johnson_work\",\n\t\"password\": \"QWEasd123\",\n\t\"uuid\": \"89124950-caf7-11e8-91c0-fedbd952e852\",\n\t\"serializedCookieStore\": \"rO0ABXNyACxvcmcuYXBhY2hlLmh0dHAuaW1wbC5jbGllbnQuQmFzaWNDb29raWVTdG9yZZbKi84kx3qnAgACTAAHY29va2llc3QAE0xqYXZhL3V0aWwvVHJlZVNldDtMAARsb2NrdAAqTGphdmEvdXRpbC9jb25jdXJyZW50L2xvY2tzL1JlYWRXcml0ZUxvY2s7eHBzcgARamF2YS51dGlsLlRyZWVTZXTdmFCTle2HWwMAAHhwc3IAL29yZy5hcGFjaGUuaHR0cC5jb29raWUuQ29va2llSWRlbnRpdHlDb21wYXJhdG9yPfxtmbuqk2wCAAB4cHcEAAAABHNyAC1vcmcuYXBhY2hlLmh0dHAuaW1wbC5jb29raWUuQmFzaWNDbGllbnRDb29raWXKS7lpupixzgIACkkADWNvb2tpZVZlcnNpb25aAAhpc1NlY3VyZUwAB2F0dHJpYnN0AA9MamF2YS91dGlsL01hcDtMAA1jb29raWVDb21tZW50dAASTGphdmEvbGFuZy9TdHJpbmc7TAAMY29va2llRG9tYWlucQB+AApMABBjb29raWVFeHBpcnlEYXRldAAQTGphdmEvdXRpbC9EYXRlO0wACmNvb2tpZVBhdGhxAH4ACkwADGNyZWF0aW9uRGF0ZXEAfgALTAAEbmFtZXEAfgAKTAAFdmFsdWVxAH4ACnhwAAAAAAFzcgARamF2YS51dGlsLkhhc2hNYXAFB9rBwxZg0QMAAkYACmxvYWRGYWN0b3JJAAl0aHJlc2hvbGR4cD9AAAAAAAAMdwgAAAAQAAAABXQABHBhdGh0AAEvdAAHZXhwaXJlc3QAHU1vbiwgMDctT2N0LTIwMTkgMTI6NDE6NTggR01UdAAGZG9tYWludAAOLmluc3RhZ3JhbS5jb210AAdtYXgtYWdldAAIMzE0NDk2MDB0AAZzZWN1cmVweHB0AA1pbnN0YWdyYW0uY29tc3IADmphdmEudXRpbC5EYXRlaGqBAUtZdBkDAAB4cHcIAAABbaY9mfB4cQB+ABBwdAAJY3NyZnRva2VudAAgVEVVdWw2NFRtWG9LdVhoSlhFekd0MnFaaW5xM1BQNVdzcQB+AAgAAAAAAXNxAH4ADT9AAAAAAAAMdwgAAAAQAAAABXQABHBhdGh0AAEvdAAHZXhwaXJlc3QAHVRodSwgMDUtT2N0LTIwMjggMTI6NDE6NTQgR01UdAAGZG9tYWludAAOLmluc3RhZ3JhbS5jb210AAdtYXgtYWdldAAJMzE1MzYwMDAwdAAGc2VjdXJlcHhwdAANaW5zdGFncmFtLmNvbXNxAH4AGXcIAAABr8CeclB4cQB+ACBwdAADbWNkdAABM3NxAH4ACAAAAAABc3EAfgANP0AAAAAAAAx3CAAAABAAAAAFdAAEcGF0aHQAAS90AAdleHBpcmVzdAAdVGh1LCAwNS1PY3QtMjAyOCAxMjo0MTo1NCBHTVR0AAZkb21haW50AA4uaW5zdGFncmFtLmNvbXQAB21heC1hZ2V0AAkzMTUzNjAwMDB0AAZzZWN1cmVweHB0AA1pbnN0YWdyYW0uY29tc3EAfgAZdwgAAAGvwJ5yUHhxAH4AL3B0AANtaWR0ABxXN3RRa2dBQkFBR3hWdWoxRnhXb2xrNkpUTGpDc3EAfgAIAAAAAAFzcQB+AA0/QAAAAAAADHcIAAAAEAAAAAR0AARwYXRodAABL3QABmRvbWFpbnQADi5pbnN0YWdyYW0uY29tdAAIaHR0cG9ubHlwdAAGc2VjdXJlcHhwdAANaW5zdGFncmFtLmNvbXBxAH4APnB0AANydXJ0AANMTEF4c3IAMWphdmEudXRpbC5jb25jdXJyZW50LmxvY2tzLlJlZW50cmFudFJlYWRXcml0ZUxvY2ue9dUA8LVoTAIAA0wACnJlYWRlckxvY2t0ADxMamF2YS91dGlsL2NvbmN1cnJlbnQvbG9ja3MvUmVlbnRyYW50UmVhZFdyaXRlTG9jayRSZWFkTG9jaztMAARzeW5jdAA4TGphdmEvdXRpbC9jb25jdXJyZW50L2xvY2tzL1JlZW50cmFudFJlYWRXcml0ZUxvY2skU3luYztMAAp3cml0ZXJMb2NrdAA9TGphdmEvdXRpbC9jb25jdXJyZW50L2xvY2tzL1JlZW50cmFudFJlYWRXcml0ZUxvY2skV3JpdGVMb2NrO3hwc3IAOmphdmEudXRpbC5jb25jdXJyZW50LmxvY2tzLlJlZW50cmFudFJlYWRXcml0ZUxvY2skUmVhZExvY2us1ou0mBloTAIAAUwABHN5bmNxAH4ASHhwc3IAPWphdmEudXRpbC5jb25jdXJyZW50LmxvY2tzLlJlZW50cmFudFJlYWRXcml0ZUxvY2skTm9uZmFpclN5bmOOwy/Ojx0DYwIAAHhyADZqYXZhLnV0aWwuY29uY3VycmVudC5sb2Nrcy5SZWVudHJhbnRSZWFkV3JpdGVMb2NrJFN5bmNXrODFP0EruQIAAHhyADVqYXZhLnV0aWwuY29uY3VycmVudC5sb2Nrcy5BYnN0cmFjdFF1ZXVlZFN5bmNocm9uaXplcmZVqEN1P1LjAgABSQAFc3RhdGV4cgA2amF2YS51dGlsLmNvbmN1cnJlbnQubG9ja3MuQWJzdHJhY3RPd25hYmxlU3luY2hyb25pemVyM9+vua1tb6kCAAB4cAAAAABxAH4AUXNyADtqYXZhLnV0aWwuY29uY3VycmVudC5sb2Nrcy5SZWVudHJhbnRSZWFkV3JpdGVMb2NrJFdyaXRlTG9ja7q3Qmg/fWhMAgABTAAEc3luY3EAfgBIeHBxAH4AUQ==\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "frontend",
+			"item": []
+		},
+		{
+			"name": "backend",
+			"item": [
+				{
+					"name": "api/auth/signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Valeriy Stupka\",\n\t\"username\": \"valerchik2\",\n\t\"email\": \"test@test.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/auth/signin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"usernameOrEmail\": \"valerchik2\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/user/me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTMxNzQ0NTMzLCJleHAiOjE1MzIzNDkzMzN9.p5Ag8IINndFcQ7RomZf8sJyFQa_6z-pifF1bGEeygka4uOpaFQp9zzF_nuDiCBH68Q9m78-Sb6CQow3v97Rv8g"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/user/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/susers",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTMxNzQ0NTMzLCJleHAiOjE1MzIzNDkzMzN9.p5Ag8IINndFcQ7RomZf8sJyFQa_6z-pifF1bGEeygka4uOpaFQp9zzF_nuDiCBH68Q9m78-Sb6CQow3v97Rv8g"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/susers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"susers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/susers/{sUsername}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTMxNzQ0NTMzLCJleHAiOjE1MzIzNDkzMzN9.p5Ag8IINndFcQ7RomZf8sJyFQa_6z-pifF1bGEeygka4uOpaFQp9zzF_nuDiCBH68Q9m78-Sb6CQow3v97Rv8g"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/susers/testuser0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"susers",
+								"testuser0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/susers/followers/{sUsername}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTMxNzQ0NTMzLCJleHAiOjE1MzIzNDkzMzN9.p5Ag8IINndFcQ7RomZf8sJyFQa_6z-pifF1bGEeygka4uOpaFQp9zzF_nuDiCBH68Q9m78-Sb6CQow3v97Rv8g"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/susers/followers/viktorSutupka",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"susers",
+								"followers",
+								"viktorSutupka"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/susers/authorization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTMxNzQ0NTMzLCJleHAiOjE1MzIzNDkzMzN9.p5Ag8IINndFcQ7RomZf8sJyFQa_6z-pifF1bGEeygka4uOpaFQp9zzF_nuDiCBH68Q9m78-Sb6CQow3v97Rv8g"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"testuser0\",\n\t\"password\": \"pwd\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/susers/authorization",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"susers",
+								"authorization"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "instagram",
+			"item": [
+				{
+					"name": "challenge",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "origin",
+								"value": "https://i.instagram.com"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "gzip, deflate, br"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,uk;q=0.8,ru;q=0.7"
+							},
+							{
+								"key": "x-requested-with",
+								"value": "XMLHttpRequest"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+							},
+							{
+								"key": "cookie",
+								"value": "mid=W7tZcAAEAAHSK86vIMQOBSACH7S6; ig_cb=1; mcd=3; csrftoken=bSCc6fNPUiu0LozawmeQaiVOnYPQDdx7; ds_user_id=8017197124; sessionid=IGSCbb4c789268f26ee4f7f8f499013d082e06b040164f0e58e3cc0d35ec68519504%3ADOnH6IfJntRnZ4X3jarkWcyiMERRq2Qh%3A%7B%22_auth_user_id%22%3A8017197124%2C%22_auth_user_backend%22%3A%22accounts.backends.CaseInsensitiveModelBackend%22%2C%22_auth_user_hash%22%3A%22%22%2C%22_platform%22%3A4%2C%22_token_ver%22%3A2%2C%22_token%22%3A%228017197124%3AdpekbAeORXrgIlvVbeZG2wC2s5cWyUzQ%3A542ec02eb4d01e3c67498c1c38c7be2ff9d07a35eecb065307c317317b9bd597%22%2C%22last_refreshed%22%3A1539004862.1665699482%7D; rur=LLA; urlgen=\"{\\\"5.45.79.18\\\": 50673\\054 \\\"5.62.61.199\\\": 198605}:1g9nqo:J-BxZT_HiLUgbrK48JIySUic-us\""
+							},
+							{
+								"key": "x-csrftoken",
+								"value": "bSCc6fNPUiu0LozawmeQaiVOnYPQDdx7"
+							},
+							{
+								"key": "x-instagram-ajax",
+								"value": "435c691245bc"
+							},
+							{
+								"key": "content-type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "referer",
+								"value": "https://i.instagram.com/challenge/8017197124/SdpNwnaZqG/"
+							},
+							{
+								"key": "authority",
+								"value": "i.instagram.com"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "choice",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://i.instagram.com/challenge/8017197124/SdpNwnaZqG/",
+							"protocol": "https",
+							"host": [
+								"i",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"challenge",
+								"8017197124",
+								"SdpNwnaZqG",
+								""
+							]
+						},
+						"description": "Generated from a curl request: \ncurl 'https://i.instagram.com/challenge/8017197124/SdpNwnaZqG/' -H 'origin: https://i.instagram.com' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: en-US,en;q=0.9,uk;q=0.8,ru;q=0.7' -H 'x-requested-with: XMLHttpRequest' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36' -H 'cookie: mid=W7tZcAAEAAHSK86vIMQOBSACH7S6; ig_cb=1; mcd=3; csrftoken=bSCc6fNPUiu0LozawmeQaiVOnYPQDdx7; ds_user_id=8017197124; sessionid=IGSCbb4c789268f26ee4f7f8f499013d082e06b040164f0e58e3cc0d35ec68519504%3ADOnH6IfJntRnZ4X3jarkWcyiMERRq2Qh%3A%7B%22_auth_user_id%22%3A8017197124%2C%22_auth_user_backend%22%3A%22accounts.backends.CaseInsensitiveModelBackend%22%2C%22_auth_user_hash%22%3A%22%22%2C%22_platform%22%3A4%2C%22_token_ver%22%3A2%2C%22_token%22%3A%228017197124%3AdpekbAeORXrgIlvVbeZG2wC2s5cWyUzQ%3A542ec02eb4d01e3c67498c1c38c7be2ff9d07a35eecb065307c317317b9bd597%22%2C%22last_refreshed%22%3A1539004862.1665699482%7D; rur=LLA; urlgen=\\\"{\\\\\"5.45.79.18\\\\\": 50673\\054 \\\\\"5.62.61.199\\\\\": 198605}:1g9nqo:J-BxZT_HiLUgbrK48JIySUic-us\\\"' -H 'x-csrftoken: bSCc6fNPUiu0LozawmeQaiVOnYPQDdx7' -H 'x-instagram-ajax: 435c691245bc' -H 'content-type: application/x-www-form-urlencoded' -H 'accept: */*' -H 'referer: https://i.instagram.com/challenge/8017197124/SdpNwnaZqG/' -H 'authority: i.instagram.com' --data 'choice=1' --compressed"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
